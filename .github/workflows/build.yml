@@ -1,7 +1,11 @@
-name: Flutter CI
+name: build artifact
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - v*
+    branches:
+      - "release/**"
 
 jobs:
   install-flutter:
@@ -14,6 +18,7 @@ jobs:
 
   analyze:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: install-flutter
     steps:
       - uses: actions/checkout@v2
@@ -21,8 +26,19 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: install-flutter
     permissions: write-all
     steps:
       - uses: actions/checkout@v2
       - uses: ./.github/actions/test
+
+  build-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [analyze, test]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/apk
+        with:
+          dart-define: 'base_url=xpto'
