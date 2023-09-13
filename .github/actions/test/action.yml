@@ -1,0 +1,47 @@
+name: Code test
+description: "runs test suites and reports results"
+
+runs:
+  using: "composite"
+  
+  steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v2
+      with: 
+        channel: 'stable'
+        cache: true
+    - name: unit tests
+      shell: bash
+      run: |
+        cd ./app
+        chmod +x ../scripts/run-tests.sh
+        ../scripts/run-tests.sh
+
+    - name: upload metrics html
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-metrics
+        path: |
+          **/coverage
+
+    - name: submit coverage report
+      uses: romeovs/lcov-reporter-action@v0.3.1
+      with:
+        lcov-file: app/coverage/lcov.info
+        title: 'coverage report'
+
+    - name: verify minimum coverage
+      uses: VeryGoodOpenSource/very_good_coverage@v2
+      if: always()
+      with:
+        path: app/coverage/lcov.info
+        exclude: "**/*.*.dart app/lib/main.dart"
+        min_coverage: 0
+
+    - name: report tests
+      uses: dorny/test-reporter@v1.6.0
+      if: always()
+      with:
+        name: test-results
+        path: app/test-results.json
+        reporter: flutter-json
