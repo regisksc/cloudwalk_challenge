@@ -10,3 +10,67 @@ scripts:
     run: flutter pub get
     exec:
       concurrency: 6
+
+  build:clean:get:
+    run: |
+      flutter clean 
+      flutter pub get
+    exec:
+      concurrency: 6
+    description: Clean Flutter package and install dependencies
+
+  build:clean:all: melos run --no-select build:clean:get
+
+  ###################################
+
+  quality:analyze:
+    run: |
+      pwd
+      flutter analyze --no-fatal-infos --no-fatal-warnings 
+      flutter pub run dart_code_metrics:metrics analyze --no-fatal-style --exclude "{**.g.dart,**.gen.dart,**.freezed.dart}" .
+      flutter pub run dart_code_metrics:metrics check-unnecessary-nullable --no-fatal-found .
+      flutter pub run dart_code_metrics:metrics check-unused-code --no-fatal-unused --exclude "{**.g.dart,**.gen.dart,**.freezed.dart}" .
+      flutter pub run dart_code_metrics:metrics check-unused-files --no-fatal-unused --exclude "{**.g.dart,**.gen.dart,**.freezed.dart,**/*test.dart,**/*main.dart,**/*_plugin_registrant.dart}" .
+      dart format .
+    select-package:
+      dir-exists:
+        - lib
+      Note: you can also rely on your IDEs Dart Analysis / Issues window.
+
+  quality:analyze:all: melos run --no-select quality:analyze
+
+  ###################################
+
+  test:
+    run: flutter test --no-pub --reporter compact
+    exec:
+      concurrency: 6
+    select-package:
+      dir-exists:
+        - test
+
+  test:update-goldens:
+    run: flutter test --no-pub --reporter compact --update-goldens
+    exec:
+      concurrency: 6
+    select-package:
+      dir-exists:
+        - test
+      scope:
+        - "design_system"
+        - "cloudwalk_challenge"
+
+  test:all: melos run test --no-select
+  test:update-goldens:all: melos run test:update-goldens --no-select
+
+  ###################################
+    
+  run:dev-app:
+    exec: flutter run -t 'app/lib/main_dev.dart' --flavor dev
+    select-package:
+      scope: "cloudwalk_challenge"
+
+  run:prod-app:
+    exec: flutter run -t 'app/lib/main_prod.dart' --flavor prod
+    select-package:
+      scope: "cloudwalk_challenge"
