@@ -1,0 +1,12 @@
+name: cloudwalk_challenge
+repository: https://github.com/regisksc/cloudwalk_challenge_mock
+
+packages:
+  - app
+  - packages/**
+
+scripts:
+  build:get:
+    run: flutter pub get
+    exec:
+      concurrency: 6

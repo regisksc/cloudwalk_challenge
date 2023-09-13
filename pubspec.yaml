@@ -1,0 +1,7 @@
+name: cloudwalk_challenge
+
+environment:
+  sdk: '>=2.18.0 <3.0.0'
+dev_dependencies:
+  dart_code_metrics: ^4.19.2
+  melos: ^3.1.1
