@@ -1,0 +1,36 @@
+name: Code static analysis
+description: "runs dart and flutter code analysis"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: subosito/flutter-action@v2
+      with: 
+        channel: 'stable'
+        cache: true
+
+    - name: setup melos
+      uses: bluefireteam/melos-action@v2
+      
+    - name: pub get
+      shell: bash
+      run: melos run build:get
+
+    - name: analyze app
+      uses: zgosalvez/github-actions-analyze-dart@v2.0.9
+      with:
+        working-directory: "${{github.workspace}}/app/"
+    
+    - name: make cyclomatic complexity metrics
+      shell: bash
+      run: |
+        chmod +x scripts/*
+        cd app
+        flutter analyze .
+        ../scripts/run-code-metrics.sh
+
+    - name: upload cyclomatic complexity metrics html
+      uses: actions/upload-artifact@v3
+      with:
+        name: complexity-metrics
+        path: metrics
