@@ -24,9 +24,8 @@ scripts:
   ###################################
 
   quality:analyze:
-    run: |
-      pwd
-      flutter analyze --no-fatal-infos --no-fatal-warnings 
+    exec: |
+      flutter analyze --no-fatal-infos --no-fatal-warnings .
       flutter pub run dart_code_metrics:metrics analyze --no-fatal-style --exclude "{**.g.dart,**.gen.dart,**.freezed.dart}" .
       flutter pub run dart_code_metrics:metrics check-unnecessary-nullable --no-fatal-found .
       flutter pub run dart_code_metrics:metrics check-unused-code --no-fatal-unused --exclude "{**.g.dart,**.gen.dart,**.freezed.dart}" .
