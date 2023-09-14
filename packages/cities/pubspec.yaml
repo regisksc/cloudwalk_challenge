@@ -1,4 +1,4 @@
-name: weather
+name: cities
 description: "A new Flutter package project."
 version: 0.0.1
 
@@ -9,13 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  core:
-  cities:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  dart_code_metrics: ^4.19.2
   flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
