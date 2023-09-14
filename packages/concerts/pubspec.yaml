@@ -1,4 +1,4 @@
-name: cities
+name: concerts
 description: "A new Flutter package project."
 version: 0.0.1
 
@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  core:
 
 dev_dependencies:
   flutter_test:

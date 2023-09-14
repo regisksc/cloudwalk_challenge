@@ -1,7 +1,9 @@
-# melos_managed_dependency_overrides: core,weather,cities
+# melos_managed_dependency_overrides: core,weather,cities,concerts
 dependency_overrides:
   cities:
     path: ../packages/cities
+  concerts:
+    path: ../packages/concerts
   core:
     path: ../packages/core
   weather:
