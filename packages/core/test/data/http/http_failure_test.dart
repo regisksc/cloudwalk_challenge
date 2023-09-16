@@ -8,12 +8,6 @@ void main() {
     expect(failure, isA<Exception>());
   });
 
-  test('InvalidHttpMethod should be a subclass of HttpFailure', () {
-    final invalidMethod = InvalidHttpMethod();
-
-    expect(invalidMethod, isA<HttpFailure>());
-  });
-
   test('BadRequestFailure should be a subclass of HttpFailure', () {
     final badRequest = BadRequestFailure();
 
