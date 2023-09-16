@@ -1,3 +1,5 @@
 import 'package:core/core.dart';
 
-abstract class GeolocateCity extends Usecase {}
+import '../../cities.dart';
+
+abstract class GeolocateCity extends Usecase<City, City> {}

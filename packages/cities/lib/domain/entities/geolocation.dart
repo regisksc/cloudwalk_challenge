@@ -9,31 +9,32 @@ class Geolocation extends Entity {
     if (!_isValidLongitude(longitude)) throw ArgumentError('Invalid longitude');
   }
 
-  final String latitude;
-  final String longitude;
+  final double latitude;
+  final double longitude;
 
   @override
   List<Object?> get props => [latitude, longitude];
 
   Geolocation copyWith({
-    String? latitude,
-    String? longitude,
+    double? latitude,
+    double? longitude,
   }) {
-    return Geolocation(
+    if (latitude == null && longitude == null) return this;
+    final entity = Geolocation(
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
     );
+    entity.markAsModified();
+    return entity;
   }
 
-  bool _isValidLatitude(String? value) {
+  bool _isValidLatitude(double? value) {
     if (value == null) return false;
-    final double? latitude = double.tryParse(value);
-    return latitude != null && latitude >= -90.0 && latitude <= 90.0;
+    return latitude >= -90.0 && latitude <= 90.0;
   }
 
-  bool _isValidLongitude(String? value) {
+  bool _isValidLongitude(double? value) {
     if (value == null) return false;
-    final double? longitude = double.tryParse(value);
-    return longitude != null && longitude >= -180.0 && longitude <= 180.0;
+    return longitude >= -180.0 && longitude <= 180.0;
   }
 }

@@ -5,7 +5,7 @@ import '../domain.dart';
 class City extends Entity {
   City({
     required this.name,
-    required this.geolocation,
+    this.geolocation,
   });
 
   final String name;
@@ -18,9 +18,12 @@ class City extends Entity {
     String? name,
     Geolocation? geolocation,
   }) {
-    return City(
+    if (name == null && geolocation == null) return this;
+    final entity = City(
       name: name ?? this.name,
       geolocation: geolocation ?? this.geolocation,
     );
+    entity.markAsModified();
+    return entity;
   }
 }
