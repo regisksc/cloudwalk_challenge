@@ -33,3 +33,4 @@ class RemotelyGeolocateCity implements GeolocateCity {
     }
   }
 }
+

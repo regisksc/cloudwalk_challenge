@@ -4,7 +4,6 @@ import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-
 class MockClient extends Mock implements HttpDatasource {}
 
 void main() {
@@ -50,16 +49,16 @@ void main() {
       result = await sut(inputCity);
     });
 
-    test('is a City entity', () async => expect(result, isA<City>()));
-    test('has a Geolocation entity stored', () async => expect(result.geolocation, isA<Geolocation>()));
-    test('its Geolocation has a latitude', () async => expect(result.geolocation?.latitude, isNotNull));
-    test('latitude is as expected', () async => expect(result.geolocation?.latitude, expectedLatitude));
-    test('its Geolocation has a longitude', () async => expect(result.geolocation?.longitude, isNotNull));
-    test('longitude is as expected', () async => expect(result.geolocation?.longitude, expectedLongitude));
+    test('is a City entity', () => expect(result, isA<City>()));
+    test('has a Geolocation entity stored', () => expect(result.geolocation, isA<Geolocation>()));
+    test('its Geolocation has a latitude', () => expect(result.geolocation?.latitude, isNotNull));
+    test('latitude is as expected', () => expect(result.geolocation?.latitude, expectedLatitude));
+    test('its Geolocation has a longitude', () => expect(result.geolocation?.longitude, isNotNull));
+    test('longitude is as expected', () => expect(result.geolocation?.longitude, expectedLongitude));
   });
 
   group('should handle errors on failures and ...', () {
-    test('throw a ServerFailure when lat and lon return as empty', () async {
+    test('throw a ServerFailure when lat and lon return as empty', () {
       when(
         () => client.request(url: any(named: 'url')),
       ).thenAnswer((_) async {
