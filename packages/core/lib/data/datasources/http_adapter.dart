@@ -15,7 +15,7 @@ class HttpDatasource implements HttpClient {
   @override
   Future request({
     required String url,
-    required HttpMethod method,
+    HttpMethod method = HttpMethod.get,
     Map? body,
     Map? headers,
     Map? queries,

@@ -26,7 +26,7 @@ void main() {
     when(() => mockClient.get(any(), headers: any(named: 'headers')))
         .thenAnswer((_) async => Response(jsonEncode(expectedResponse), 200));
 
-    final response = await httpDatasource.request(url: 'test', method: HttpMethod.get);
+    final response = await httpDatasource.request(url: 'test');
 
     expect(response, equals(expectedResponse));
   });
