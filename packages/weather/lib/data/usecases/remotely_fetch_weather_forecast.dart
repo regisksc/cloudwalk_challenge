@@ -16,6 +16,7 @@ class RemotelyFetchWeatherForecast implements FetchWeatherForecast {
         queries: ApiHelper.makeForecastQuery(
           lat: location.latitude.toString(),
           lon: location.longitude.toString(),
+          locale: params.locale,
         ),
       ),
     );

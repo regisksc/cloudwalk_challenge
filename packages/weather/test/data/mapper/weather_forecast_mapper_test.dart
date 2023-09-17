@@ -24,7 +24,7 @@ void main() {
       final itemJson = listData.firstOrNull;
       sut = WeatherForecastMapper.fromJson(itemJson);
 
-      expectedTime = DateTime.fromMillisecondsSinceEpoch((itemJson['dt'] as int) * 1000).formatted;
+      expectedTime = DateTime.fromMillisecondsSinceEpoch((itemJson['dt'] as int) * 1000).formatted();
       expectedWeatherDescription =
           ((itemJson['weather'] as List<dynamic>).firstOrNull as Map<String, dynamic>)['description'] ?? 'N/A';
       expectedWindSpeed = WindSpeed(value: itemJson['wind']['speed'] as num);

@@ -9,9 +9,9 @@ class WeatherForecastMapper {
     required this.windSpeed,
   });
 
-  factory WeatherForecastMapper.fromJson(Map<String, dynamic> json) {
+  factory WeatherForecastMapper.fromJson(Map<String, dynamic> json, {String? locale}) {
     return WeatherForecastMapper(
-      time: DateTime.fromMillisecondsSinceEpoch((json['dt'] as int) * 1000).formatted,
+      time: DateTime.fromMillisecondsSinceEpoch((json['dt'] as int) * 1000).formatted(locale),
       tempMin: Temperature(value: json['main']['temp_min'] as num),
       tempMax: Temperature(value: json['main']['temp_max'] as num),
       weatherDescription:
@@ -26,7 +26,3 @@ class WeatherForecastMapper {
   final String weatherDescription;
   final WindSpeed windSpeed;
 }
-
-
-
-
