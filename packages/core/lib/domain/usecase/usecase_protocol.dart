@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+import '../../core.dart';
 
 abstract class Usecase<Output, Input> {
   Future<Output> call(Input params);
