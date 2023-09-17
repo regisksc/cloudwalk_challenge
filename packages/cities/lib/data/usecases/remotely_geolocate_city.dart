@@ -26,11 +26,10 @@ class RemotelyGeolocateCity implements GeolocateCity {
 
       return city.copyWith(geolocation: geolocation);
     } catch (error) {
-      if (error is BadRequestFailure || error is UnauthorizedFailure || error is NotFoundFailure) {
+      if (error is BadRequestFailure || error is UnauthorizedFailure) {
         throw ClientFailure();
       }
       rethrow;
     }
   }
 }
-

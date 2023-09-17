@@ -25,7 +25,7 @@ class FetchWeatherForecastUsecase implements FetchWeatherForecast {
       final mapperList = listData.map((e) => WeatherForecastMapper.fromJson(e)).toList();
       return mapperList.asEntities;
     } catch (error) {
-      if (error is BadRequestFailure || error is UnauthorizedFailure || error is NotFoundFailure) {
+      if (error is BadRequestFailure || error is UnauthorizedFailure) {
         throw ClientFailure();
       }
       rethrow;

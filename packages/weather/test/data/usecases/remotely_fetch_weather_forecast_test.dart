@@ -73,12 +73,5 @@ void main() {
       // Act and assert
       expect(() => sut(inputParams), throwsA(isA<ClientFailure>()));
     });
-
-    test('throw a ClientFailure when receiving NotFoundFailure', () {
-      // Arrange: Mock an HttpFailure
-      catchRequestFailure(NotFoundFailure());
-      // Act and assert
-      expect(() => sut(inputParams), throwsA(isA<ClientFailure>()));
-    });
   });
 }

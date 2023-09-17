@@ -87,11 +87,6 @@ void main() {
         catchRequestFailure(UnauthorizedFailure());
         expect(() => sut(inputCity), throwsA(isA<ClientFailure>()));
       });
-      test('throw a ClientFailure on getting NotFoundFailure', () {
-        // Arrange: mock an HttpFailure
-        catchRequestFailure(NotFoundFailure());
-        expect(() => sut(inputCity), throwsA(isA<ClientFailure>()));
-      });
     });
   });
 }
