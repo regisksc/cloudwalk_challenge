@@ -17,7 +17,6 @@ class RemotelyGeolocateCity implements GeolocateCity {
           path: ApiHelper.geolocationPath,
           queries: ApiHelper.makeGeolocationQuery(city.name),
         ),
-        method: HttpMethod.get,
       ) as List<Map<String, dynamic>>;
 
       final latitude = geolocationJson.first['lat'];

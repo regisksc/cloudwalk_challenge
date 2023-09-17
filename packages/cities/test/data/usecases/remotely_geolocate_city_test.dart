@@ -44,7 +44,7 @@ void main() {
     setUp(() async {
       // Arrange: SetUp request
       when(
-        () => client.request(url: any(named: 'url'), method: HttpMethod.get),
+        () => client.request(url: any(named: 'url')),
       ).thenAnswer((_) async => geolocationJson);
       // Act: Call the use case with the input city
       result = await sut(inputCity);
@@ -61,7 +61,7 @@ void main() {
   group('should handle errors on failures and ...', () {
     test('throw a ServerFailure when lat and lon return as empty', () async {
       when(
-        () => client.request(url: any(named: 'url'), method: HttpMethod.get),
+        () => client.request(url: any(named: 'url')),
       ).thenAnswer((_) async {
         final json = geolocationJson.first;
         json['lat'] = '';
@@ -74,7 +74,7 @@ void main() {
     group('', () {
       void catchRequestFailure(HttpFailure failure) {
         when(
-          () => client.request(url: any(named: 'url'), method: HttpMethod.get),
+          () => client.request(url: any(named: 'url')),
         ).thenThrow(failure);
       }
 
