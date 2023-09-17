@@ -1,1 +1,1 @@
-export 'remotely_fetch_weather_forecast_usecase.dart';
+export 'remotely_fetch_weather_forecast.dart';

@@ -11,25 +11,18 @@ class RemotelyGeolocateCity implements GeolocateCity {
   Future<City> call(City params) async {
     final city = params;
 
-    try {
-      final geolocationJson = await client.request(
-        url: ApiHelper.makeUrl(
-          path: ApiHelper.geolocationPath,
-          queries: ApiHelper.makeGeolocationQuery(city.name),
-        ),
-      ) as List<Map<String, dynamic>>;
+    final geolocationJson = await client.request(
+      url: ApiHelper.makeUrl(
+        path: ApiHelper.geolocationPath,
+        queries: ApiHelper.makeGeolocationQuery(city.name),
+      ),
+    ) as List<Map<String, dynamic>>;
 
-      final latitude = geolocationJson.first['lat'];
-      final longitude = geolocationJson.first['lon'];
-      if (latitude == '' || longitude == '') throw ServerFailure();
-      final geolocation = Geolocation(latitude: latitude, longitude: longitude);
+    final latitude = geolocationJson.first['lat'];
+    final longitude = geolocationJson.first['lon'];
+    if (latitude == '' || longitude == '') throw ServerFailure();
+    final geolocation = Geolocation(latitude: latitude, longitude: longitude);
 
-      return city.copyWith(geolocation: geolocation);
-    } catch (error) {
-      if (error is BadRequestFailure || error is UnauthorizedFailure) {
-        throw ClientFailure();
-      }
-      rethrow;
-    }
+    return city.copyWith(geolocation: geolocation);
   }
 }

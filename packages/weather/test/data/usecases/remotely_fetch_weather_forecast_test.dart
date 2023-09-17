@@ -13,7 +13,7 @@ class MockClient extends Mock implements HttpClient {}
 
 void main() {
   late HttpClient client;
-  late FetchWeatherForecastUsecase sut;
+  late RemotelyFetchWeatherForecast sut;
 
   late WeatherForcastInput inputParams;
 
@@ -26,7 +26,7 @@ void main() {
       longitude: faker.geo.longitude(),
     );
     client = MockClient();
-    sut = FetchWeatherForecastUsecase(client);
+    sut = RemotelyFetchWeatherForecast(client);
   });
 
   setUpAll(() {
@@ -47,31 +47,5 @@ void main() {
     });
 
     test('return a list of WeatherForecast entities', () => expect(result, isA<List<WeatherForecast>>()));
-  });
-
-  group('should handle errors on failures and...', () {
-    void catchRequestFailure(HttpFailure failure) {
-      when(
-        () => client.request(
-          url: any(named: 'url'),
-          method: any(named: 'method'),
-          queries: any(named: 'queries'),
-        ),
-      ).thenThrow(failure);
-    }
-
-    test('throw a ClientFailure when receiving BadRequestFailure', () {
-      // Arrange: Mock an HttpFailure
-      catchRequestFailure(BadRequestFailure());
-      // Act and assert
-      expect(() => sut(inputParams), throwsA(isA<ClientFailure>()));
-    });
-
-    test('throw a ClientFailure when receiving UnauthorizedFailure', () {
-      // Arrange: Mock an HttpFailure
-      catchRequestFailure(UnauthorizedFailure());
-      // Act and assert
-      expect(() => sut(inputParams), throwsA(isA<ClientFailure>()));
-    });
   });
 }

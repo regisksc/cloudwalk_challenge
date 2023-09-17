@@ -55,38 +55,14 @@ void main() {
     test('latitude is as expected', () => expect(result.geolocation?.latitude, expectedLatitude));
     test('its Geolocation has a longitude', () => expect(result.geolocation?.longitude, isNotNull));
     test('longitude is as expected', () => expect(result.geolocation?.longitude, expectedLongitude));
-  });
-
-  group('should handle errors on failures and ...', () {
     test('throw a ServerFailure when lat and lon return as empty', () {
-      when(
-        () => client.request(url: any(named: 'url')),
-      ).thenAnswer((_) async {
+      when(() => client.request(url: any(named: 'url'))).thenAnswer((_) async {
         final json = geolocationJson.first;
         json['lat'] = '';
         json['lon'] = '';
         return [json];
       });
       expect(() => sut(inputCity), throwsA(isA<ServerFailure>()));
-    });
-
-    group('', () {
-      void catchRequestFailure(HttpFailure failure) {
-        when(
-          () => client.request(url: any(named: 'url')),
-        ).thenThrow(failure);
-      }
-
-      test('throw a ClientFailure on getting BadRequestFailure', () {
-        // Arrange: mock an HttpFailure
-        catchRequestFailure(BadRequestFailure());
-        expect(() => sut(inputCity), throwsA(isA<ClientFailure>()));
-      });
-      test('throw a ClientFailure on getting UnauthorizedFailure', () {
-        // Arrange: mock an HttpFailure
-        catchRequestFailure(UnauthorizedFailure());
-        expect(() => sut(inputCity), throwsA(isA<ClientFailure>()));
-      });
     });
   });
 }
