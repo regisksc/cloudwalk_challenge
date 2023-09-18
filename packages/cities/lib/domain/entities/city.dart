@@ -4,11 +4,14 @@ import '../domain.dart';
 
 class City extends Entity {
   City({
-    required this.name,
+    required String name,
     this.geolocation,
-  });
+  }) {
+    RegExp(r'^[A-Za-z\s]+$').hasMatch(name) ? _name = name : throw ArgumentError('Invalid city name: $name');
+  }
 
-  final String name;
+  String get name => _name;
+  String _name = '';
   final Geolocation? geolocation;
 
   @override

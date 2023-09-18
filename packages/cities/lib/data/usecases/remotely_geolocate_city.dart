@@ -18,6 +18,8 @@ class RemotelyGeolocateCity implements GeolocateCity {
       ),
     ) as List<Map<String, dynamic>>;
 
+    // ignore: unnecessary_null_comparison
+    if (geolocationJson == null) throw NotFoundFailure();
     final latitude = geolocationJson.first['lat'];
     final longitude = geolocationJson.first['lon'];
     if (latitude == '' || longitude == '') throw ServerFailure();
