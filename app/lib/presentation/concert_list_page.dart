@@ -31,8 +31,10 @@ class _ConcertListPageState extends State<ConcertListPage> {
 
   @override
   void dispose() {
+    // context.read<ConcertListAppBarCubit>().close();
+    // context.read<ConcertListBodyCubit>().close();
+    // context.read<ConnectivityCubit>().close();
     super.dispose();
-    context.read<ConcertListBodyCubit>().close();
   }
 
   @override
