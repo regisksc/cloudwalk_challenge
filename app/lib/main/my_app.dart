@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
             return switch (routeSettings.name) {
               ConcertListPage.routeName => MultiBlocProvider(
                   providers: [
-                    BlocProvider.value(value: ConcertListAppBarCubit()),
                     BlocProvider.value(
                       value: ConcertListBodyCubit(
                         ErrorHandleDecorator<City, City>(RemotelyGeolocateCity(httpAdapter)) as GeolocateCity,
