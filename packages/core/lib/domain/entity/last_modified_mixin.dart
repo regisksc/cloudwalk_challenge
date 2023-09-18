@@ -11,9 +11,9 @@ mixin LastModifiedMixin {
     if (lastModified == null) return result;
     final difference = now.difference(lastModified!);
 
-    if (difference.inHours > 0) {
+    if (difference.inHours > 0 && difference.inHours < 24) {
       result = "${difference.inHours} ${difference.inHours == 1 ? 'hour' : 'hours'} ago";
-    } else if (difference.inMinutes > 0) {
+    } else if (difference.inMinutes > 0 && difference.inMinutes < 60) {
       result = "${difference.inMinutes} ${difference.inMinutes == 1 ? 'minute' : 'minutes'} ago";
     } else {
       result = "${difference.inDays} ${difference.inDays == 1 ? 'day' : 'days'} ago";

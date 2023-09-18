@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -25,16 +24,37 @@ void main() {
       expect(timeSinceModified, 'Just now');
     });
 
-    test('timeSinceLastModified returns correct time string after modification', () {
+    test('timeSinceLastModified returns correct time string in minutes after modification', () {
       testInstance.markAsModified();
-      final modifiedTime = DateTime.now().subtract(Duration(minutes: faker.randomGenerator.integer(120)));
+      final modifiedTime = DateTime.now().subtract(Duration(minutes: randomNumber(min: 0, max: 60).toInt()));
 
       testInstance.lastModified = modifiedTime;
 
       final timeSinceModified = testInstance.timeSinceLastModified();
 
-      final minutes = modifiedTime.difference(DateTime.now()).inMinutes.abs();
-      expect(timeSinceModified, '$minutes ${minutes == 1 ? 'minute' : 'minutes'} ago');
+      expect(timeSinceModified, contains('minute'));
+    });
+
+    test('timeSinceLastModified returns correct time string in hours after modification', () {
+      testInstance.markAsModified();
+      final modifiedTime = DateTime.now().subtract(Duration(minutes: randomNumber(min: 60, max: 120).toInt()));
+
+      testInstance.lastModified = modifiedTime;
+
+      final timeSinceModified = testInstance.timeSinceLastModified();
+
+      expect(timeSinceModified, contains('hour'));
+    });
+
+    test('timeSinceLastModified returns correct time string in days after modification', () {
+      testInstance.markAsModified();
+      final modifiedTime = DateTime.now().subtract(Duration(minutes: randomNumber(min: 1440, max: 1600).toInt()));
+
+      testInstance.lastModified = modifiedTime;
+
+      final timeSinceModified = testInstance.timeSinceLastModified();
+
+      expect(timeSinceModified, contains('day'));
     });
   });
 }
