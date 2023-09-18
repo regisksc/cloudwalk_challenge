@@ -12,7 +12,7 @@ class RemotelyFetchWeatherForecast implements FetchWeatherForecast {
     final location = params;
     final result = await client.request(
       url: ApiHelper.makeUrl(
-        path: ApiHelper.forecastPath,
+        path: WeatherConstants.forecastPath,
         queries: ApiHelper.makeForecastQuery(
           lat: location.latitude.toString(),
           lon: location.longitude.toString(),

@@ -8,11 +8,7 @@ void main() {
     expect(actualPath, expectedPath);
   });
 
-  test('forecastPath should return the correct path', () {
-    const expectedPath = '/data/2.5/forecast';
-    final actualPath = ApiHelper.forecastPath;
-    expect(actualPath, expectedPath);
-  });
+  
 
   test('makeGeolocationQuery should create the correct query map', () {
     final query = ApiHelper.makeGeolocationQuery('New York');
