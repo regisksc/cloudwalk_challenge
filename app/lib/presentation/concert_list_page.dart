@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-class ConcertListPage extends StatelessWidget {
+import 'presentation.dart';
+
+class ConcertListPage extends StatefulWidget {
   const ConcertListPage({
     super.key,
     this.locations = const <String>[
@@ -15,6 +16,24 @@ class ConcertListPage extends StatelessWidget {
   final List<String> locations;
 
   static const String routeName = '/concerts';
+
+  @override
+  State<ConcertListPage> createState() => _ConcertListPageState();
+}
+
+class _ConcertListPageState extends State<ConcertListPage> {
+  bool get hasConnection => true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    context.read<ConcertListBodyCubit>().close();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +53,21 @@ class ConcertListPage extends StatelessWidget {
         ],
       ),
       body: ListView.builder(
-        restorationId: routeName,
-        itemCount: locations.length,
+        restorationId: ConcertListPage.routeName,
+        itemCount: widget.locations.length,
         itemBuilder: (BuildContext context, int index) {
-          final location = locations[index].split(',').first;
+          final location = widget.locations[index].split(',').first;
 
           return ListTile(
-              title: Text(location),
-              leading: const CircleAvatar(child: Icon(FeatherIcons.mapPin)),
-              onTap: () {
-                // Navigator.restorablePushNamed(
-                //   context,
-                //   ConcertDetailsView.routeName,
-                // );
-              });
+            title: Text(location),
+            leading: const CircleAvatar(child: Icon(FeatherIcons.mapPin)),
+            onTap: () {
+              // Navigator.restorablePushNamed(
+              //   context,
+              //   ConcertDetailsView.routeName,
+              // );
+            },
+          );
         },
       ),
     );

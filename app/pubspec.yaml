@@ -15,13 +15,17 @@ dependencies:
   cities:
   cupertino_icons: ^1.0.2
   flutter_feather_icons: ^2.0.0+1
+  flutter_bloc: 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  dart_code_metrics: ^4.19.2
+  dart_code_metrics: 
   flutter_lints: ^2.0.0
+  bloc_test: ^9.1.4
+  mocktail: ^1.0.0
+  faker: ^2.1.0
 
 flutter:
   uses-material-design: true
