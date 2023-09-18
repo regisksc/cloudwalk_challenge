@@ -32,8 +32,8 @@ void main() {
       expectedTempMax = Temperature(value: itemJson['main']['temp_max'] as num);
     });
     group("its time ...", () {
-      test('is a String', () => expect(sut.time, isA<String>()));
-      test('is as expected', () => expect(sut.time, equals(expectedTime)));
+      test('is a String', () => expect(sut.time, isA<ForecastTime>()));
+      test('is as expected', () => expect(sut.time.formatted, equals(expectedTime)));
     });
 
     group("its tempMin ...", () {

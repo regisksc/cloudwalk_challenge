@@ -11,7 +11,7 @@ class WeatherForecastMapper {
 
   factory WeatherForecastMapper.fromJson(Map<String, dynamic> json, {String? locale}) {
     return WeatherForecastMapper(
-      time: DateTime.fromMillisecondsSinceEpoch((json['dt'] as int) * 1000).formatted(locale),
+      time: ForecastTime(unixTimestamp: json['dt'] as int, locale: locale),
       tempMin: Temperature(value: json['main']['temp_min'] as num),
       tempMax: Temperature(value: json['main']['temp_max'] as num),
       weatherDescription:
@@ -20,7 +20,7 @@ class WeatherForecastMapper {
     );
   }
 
-  final String time;
+  final ForecastTime time;
   final Temperature tempMin;
   final Temperature tempMax;
   final String weatherDescription;

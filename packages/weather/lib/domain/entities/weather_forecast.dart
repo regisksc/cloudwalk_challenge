@@ -11,7 +11,7 @@ class WeatherForecast extends Entity {
     required this.windSpeed,
   });
 
-  final String time;
+  final ForecastTime time;
   final Temperature tempMin;
   final Temperature tempMax;
   final String weatherDescription;
