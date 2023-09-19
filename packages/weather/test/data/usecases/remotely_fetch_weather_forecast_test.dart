@@ -8,11 +8,13 @@ import 'package:mocktail/mocktail.dart';
 import 'package:weather/weather.dart';
 
 import '../../_fixtures/json_fixture_reader.dart';
+import '../../_utils/mocks.dart';
 
 class MockClient extends Mock implements HttpClient {}
 
 void main() {
   late HttpClient client;
+  late Write storage;
   late RemotelyFetchWeatherForecast sut;
 
   late WeatherFetchingInput inputParams;
@@ -26,7 +28,8 @@ void main() {
       longitude: faker.geo.longitude(),
     );
     client = MockClient();
-    sut = RemotelyFetchWeatherForecast(client);
+    storage = MockWrite();
+    sut = RemotelyFetchWeatherForecast(client: client, storage: storage);
   });
 
   setUpAll(() {
@@ -41,6 +44,9 @@ void main() {
       when(
         () => client.request(url: any(named: 'url'), method: any(named: 'method')),
       ).thenAnswer((_) async => jsonEncode(json));
+      when(
+        () => storage.write(key: 'list_${inputParams.cacheKey}', value: any(named: 'value')),
+      ).thenAnswer((_) => Future.value());
 
       // Act: Call the use case with the input parameters
       result = await sut(inputParams);

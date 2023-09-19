@@ -5,9 +5,11 @@ import 'package:core/exports/exports.dart';
 import '../../weather.dart';
 
 class RemotelyFetchCurrentWeather implements FetchCurrentWeather {
-  RemotelyFetchCurrentWeather(this.client);
+  RemotelyFetchCurrentWeather({required this.client, required this.storage});
 
   final HttpClient client;
+  final Write storage;
+
   Future<WeatherForecast> call(WeatherFetchingInput params) async {
     final result = await client.request(
       url: ApiHelper.makeUrl(
@@ -20,6 +22,7 @@ class RemotelyFetchCurrentWeather implements FetchCurrentWeather {
       ),
     );
     final json = jsonDecode(result) as Map<String, dynamic>;
+    storage.write(key: params.cacheKey, value: jsonEncode(json));
     return WeatherForecastMapper.fromJson(json).asEntity;
   }
 }
