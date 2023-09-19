@@ -5,7 +5,9 @@ import '../weather.dart';
 import 'presentation.dart';
 
 class WeatherForecastPage extends StatefulWidget {
-  const WeatherForecastPage({super.key});
+  const WeatherForecastPage({super.key, required this.input});
+
+  final WeatherFetchingInput input;
 
   @override
   State<WeatherForecastPage> createState() => _WeatherForecastPageState();

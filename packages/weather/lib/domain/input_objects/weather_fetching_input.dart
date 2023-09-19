@@ -14,7 +14,7 @@ class WeatherFetchingInput extends Equatable {
   @override
   List<Object?> get props => [latitude, longitude, locale];
 
-  String get cacheKey => 'weather_${latitude}_${longitude}_${locale ?? 'default'}';
+  String get cacheKey => 'weather_${latitude}_${longitude}_${locale ?? 'en_US'}';
 
   bool? get stringify => true;
 }
