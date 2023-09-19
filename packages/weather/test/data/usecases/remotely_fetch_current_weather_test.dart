@@ -5,6 +5,7 @@ import 'package:core/exports/exports.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:weather/data/usecases/remotely_fetch_current_weather.dart';
 import 'package:weather/weather.dart';
 
 import '../../_fixtures/json_fixture_reader.dart';
@@ -13,11 +14,11 @@ class MockClient extends Mock implements HttpClient {}
 
 void main() {
   late HttpClient client;
-  late RemotelyFetchWeatherForecast sut;
+  late RemotelyFetchCurrentWeather sut;
 
   late WeatherFetchingInput inputParams;
 
-  final jsonString = fixture('sao_paulo_weather_fixture.json');
+  final jsonString = fixture('sao_paulo_current_weather_fixture.json');
   final json = jsonDecode(jsonString) as Map<String, dynamic>;
 
   setUp(() {
@@ -26,15 +27,15 @@ void main() {
       longitude: faker.geo.longitude(),
     );
     client = MockClient();
-    sut = RemotelyFetchWeatherForecast(client);
+    sut = RemotelyFetchCurrentWeather(client);
   });
 
   setUpAll(() {
     registerFallbackValue(HttpMethod.get);
   });
 
-  group('should fetch weather forecast data and...', () {
-    late List<WeatherForecast> result;
+  group('should fetch current weather forecast data and...', () {
+    late WeatherForecast result;
 
     setUp(() async {
       // Arrange: Set up the request and response
@@ -46,6 +47,6 @@ void main() {
       result = await sut(inputParams);
     });
 
-    test('return a list of WeatherForecast entities', () => expect(result, isA<List<WeatherForecast>>()));
+    test('return one WeatherForecast entity', () => expect(result, isA<WeatherForecast>()));
   });
 }

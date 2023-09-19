@@ -26,3 +26,19 @@ class WeatherForecastMapper {
   final String weatherDescription;
   final WindSpeed windSpeed;
 }
+
+extension WeatherForecastMapperExtensions on WeatherForecastMapper {
+  WeatherForecast get asEntity {
+    return WeatherForecast(
+      time: time,
+      tempMin: tempMin,
+      tempMax: tempMax,
+      weatherDescription: weatherDescription,
+      windSpeed: windSpeed,
+    );
+  }
+}
+
+extension WeatherForecastMapperListExtensions on List<WeatherForecastMapper> {
+  List<WeatherForecast> get asEntities => map((e) => e.asEntity).toList();
+}

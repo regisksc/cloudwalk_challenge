@@ -4,14 +4,14 @@ import 'package:core/exports/exports.dart';
 
 import '../../weather.dart';
 
-class RemotelyFetchWeatherForecast implements FetchWeatherForecast {
-  RemotelyFetchWeatherForecast(this.client);
+class RemotelyFetchCurrentWeather implements FetchCurrentWeather {
+  RemotelyFetchCurrentWeather(this.client);
 
   final HttpClient client;
-  Future<List<WeatherForecast>> call(WeatherFetchingInput params) async {
+  Future<WeatherForecast> call(WeatherFetchingInput params) async {
     final result = await client.request(
       url: ApiHelper.makeUrl(
-        path: WeatherConstants.forecastPath,
+        path: WeatherConstants.currentWeatherPath,
         queries: ApiHelper.makeForecastQuery(
           lat: params.latitude.toString(),
           lon: params.longitude.toString(),
@@ -20,8 +20,6 @@ class RemotelyFetchWeatherForecast implements FetchWeatherForecast {
       ),
     );
     final json = jsonDecode(result) as Map<String, dynamic>;
-    final listData = json['list'] as List<dynamic>;
-    final mapperList = listData.map((e) => WeatherForecastMapper.fromJson(e)).toList();
-    return mapperList.asEntities;
+    return WeatherForecastMapper.fromJson(json).asEntity;
   }
 }

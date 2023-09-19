@@ -18,18 +18,16 @@ void main() {
 
     setUpAll(() async {
       await initializeDateFormatting('en_US');
-      final jsonString = fixture('sao_paulo_weather_fixture.json');
+      final jsonString = fixture('sao_paulo_current_weather_fixture.json');
       final json = jsonDecode(jsonString) as Map<String, dynamic>;
-      final listData = json['list'] as List<dynamic>;
-      final itemJson = listData.firstOrNull;
-      sut = WeatherForecastMapper.fromJson(itemJson);
+      sut = WeatherForecastMapper.fromJson(json);
 
-      expectedTime = DateTime.fromMillisecondsSinceEpoch((itemJson['dt'] as int) * 1000).formatted();
+      expectedTime = DateTime.fromMillisecondsSinceEpoch((json['dt'] as int) * 1000).formatted();
       expectedWeatherDescription =
-          ((itemJson['weather'] as List<dynamic>).firstOrNull as Map<String, dynamic>)['description'] ?? 'N/A';
-      expectedWindSpeed = WindSpeed(value: itemJson['wind']['speed'] as num);
-      expectedTempMin = Temperature(value: itemJson['main']['temp_min'] as num);
-      expectedTempMax = Temperature(value: itemJson['main']['temp_max'] as num);
+          ((json['weather'] as List<dynamic>).firstOrNull as Map<String, dynamic>)['description'] ?? 'N/A';
+      expectedWindSpeed = WindSpeed(value: json['wind']['speed'] as num);
+      expectedTempMin = Temperature(value: json['main']['temp_min'] as num);
+      expectedTempMax = Temperature(value: json['main']['temp_max'] as num);
     });
     group("its time ...", () {
       test('is a String', () => expect(sut.time, isA<ForecastTime>()));
