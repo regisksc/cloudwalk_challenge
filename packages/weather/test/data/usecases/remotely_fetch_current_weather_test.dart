@@ -5,7 +5,6 @@ import 'package:core/exports/exports.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:weather/data/usecases/remotely_fetch_current_weather.dart';
 import 'package:weather/weather.dart';
 
 import '../../_fixtures/json_fixture_reader.dart';
