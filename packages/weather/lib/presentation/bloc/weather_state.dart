@@ -42,3 +42,11 @@ class WeatherError extends WeatherState {
   @override
   List<Object?> get props => [errorMessage];
 }
+
+class CurrentWeatherError extends WeatherError {
+  CurrentWeatherError(super.errorMessage);
+}
+
+class WeatherForecastError extends WeatherError {
+  WeatherForecastError(super.errorMessage);
+}

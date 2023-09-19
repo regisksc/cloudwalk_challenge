@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const WeatherForecastPage(
         input: WeatherFetchingInput(latitude: 1, longitude: 1),
+        title: 'Liverpool',
       ),
       onGenerateRoute: (RouteSettings routeSettings) {
         return MaterialPageRoute(
