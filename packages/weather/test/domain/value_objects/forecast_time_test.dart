@@ -8,7 +8,7 @@ void main() {
 
       final forecastTime = ForecastTime(unixTimestamp: unixTimestamp);
 
-      expect(forecastTime.formatted, 'Fri, Sep 17, 21');
+      expect(forecastTime.formatted, 'Fri, Sep 17, 2021 - 7:40 AM');
     });
   });
 }

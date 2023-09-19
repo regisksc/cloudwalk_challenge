@@ -7,10 +7,10 @@ void main() {
     // Create a DateTime instance for testing
     final dateTime = DateTime(2023, 9, 16, 15); // September 16, 2023, 3:00 PM
     final formatted = dateTime.formatted();
-    const expected = 'Sat, Sep 16, 23';
+    const expected = 'Sat, Sep 16, 2023 - 3:00 PM';
 
     // Expect that the formatted result matches the expected string
-    expect(formatted, expected);
+    expect(formatted, equals(expected));
   });
 
   test("should format DateTime correctly with a given locale", () {
@@ -19,9 +19,9 @@ void main() {
     initializeDateFormatting(nonDefaultLocale);
     final dateTime = DateTime(2023, 9, 16, 15); // September 16, 2023, 3:00 PM
     final formatted = dateTime.formatted(nonDefaultLocale);
-    const expected = '土, 9月 16, 23'; // formatted to japanese
+    const expected = '土, 9月 16, 2023 - 15:00'; // formatted to japanese
 
     // Expect that the formatted result matches the expected string
-    expect(formatted, expected);
+    expect(formatted, equals(expected));
   });
 }

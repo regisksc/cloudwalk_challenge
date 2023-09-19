@@ -1,10 +1,13 @@
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 extension DateFormatter on DateTime {
   String formatted([String? locale = 'en_US']) {
-    initializeDateFormatting(locale);
-    final format = DateFormat('E, MMM d, yy', locale);
-    return format.format(this);
+    final dateFormat = DateFormat('E, MMM d, y', locale);
+    final timeFormat = DateFormat('jm', locale);
+
+    final datePart = dateFormat.format(this);
+    final timePart = timeFormat.format(this).replaceAll('\u202F', ' ');
+
+    return '$datePart - $timePart';
   }
 }
