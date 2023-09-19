@@ -1,6 +1,7 @@
 import 'package:cities/cities.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:weather/presentation/weather_forecast_page.dart';
 
 import '../presentation/presentation.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       restorationScopeId: 'app',
       debugShowCheckedModeBanner: false,
-      home: concertListPage,
+      home: const WeatherForecastPage(),
       onGenerateRoute: (RouteSettings routeSettings) {
         return MaterialPageRoute(
           settings: routeSettings,

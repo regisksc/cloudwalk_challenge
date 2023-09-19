@@ -9,7 +9,9 @@ enum TemperatureDanger {
 }
 
 class Temperature extends Equatable {
-  Temperature({required this.value}) {
+  Temperature({
+    required this.value,
+  }) {
     danger = switch (value) {
       < 32 => TemperatureDanger.unbearablyCold,
       < 59 && > 32 => TemperatureDanger.cold,
