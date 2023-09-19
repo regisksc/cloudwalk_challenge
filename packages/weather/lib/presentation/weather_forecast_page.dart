@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../weather.dart';
-import 'presentation.dart';
 
 class WeatherForecastPage extends StatefulWidget {
   const WeatherForecastPage({
@@ -15,7 +14,7 @@ class WeatherForecastPage extends StatefulWidget {
   final WeatherFetchingInput input;
   final String title;
 
-  static String get routeName => '/weather';
+  static const String routeName = '/weather';
 
   @override
   State<WeatherForecastPage> createState() => _WeatherForecastPageState();
@@ -43,7 +42,7 @@ class _WeatherForecastPageState extends State<WeatherForecastPage> {
                 flex: 15,
                 child: BlocBuilder<WeatherCubit, WeatherState>(
                   builder: (context, state) {
-                    if (state is CurrentWeatherLoading) return const CircularProgressIndicator.adaptive();
+                    if (state is CurrentWeatherLoading) return WeatherForecastList.loading();
                     if (state is CurrentWeatherError) return WeatherForecastList.error();
                     if (state is CurrentWeatherLoaded) {
                       return WeatherForecastList(title: 'current condition', forecasts: [state.weather]);
@@ -57,7 +56,7 @@ class _WeatherForecastPageState extends State<WeatherForecastPage> {
                 flex: 52,
                 child: BlocBuilder<WeatherCubit, WeatherState>(
                   builder: (context, state) {
-                    if (state is WeatherForecastLoading) return const CircularProgressIndicator.adaptive();
+                    if (state is WeatherForecastLoading) return WeatherForecastList.loading();
                     if (state is WeatherForecastError) return WeatherForecastList.error();
                     if (state is WeatherForecastLoaded) {
                       return WeatherForecastList(title: 'next 5 days', forecasts: state.forecasts.sublist(0, 5));
@@ -88,7 +87,13 @@ class WeatherForecastList extends StatelessWidget {
     return const WeatherForecastList();
   }
 
+  factory WeatherForecastList.loading() {
+    _isLoading = true;
+    return const WeatherForecastList();
+  }
+
   static bool _hasError = false;
+  static bool _isLoading = false;
 
   final String? title;
   final List<WeatherForecast>? forecasts;
@@ -96,6 +101,7 @@ class WeatherForecastList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) return const CircularProgressIndicator.adaptive();
     if (_hasError) return const Center(child: Icon(FeatherIcons.alertOctagon, color: Colors.red, size: 32));
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .02),

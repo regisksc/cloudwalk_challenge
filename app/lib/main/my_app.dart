@@ -1,7 +1,5 @@
-import 'package:cities/cities.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:weather/presentation/weather_forecast_page.dart';
 import 'package:weather/weather.dart';
 
 import '../presentation/presentation.dart';
@@ -15,25 +13,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       restorationScopeId: 'app',
       debugShowCheckedModeBanner: false,
-      home: const WeatherForecastPage(
-        input: WeatherFetchingInput(latitude: 1, longitude: 1),
-        title: 'Liverpool',
-      ),
+      initialRoute: WeatherForecastPage.routeName,
       onGenerateRoute: (RouteSettings routeSettings) {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) {
             final httpAdapter = HttpDatasource(client: Client(), baseUrl: 'api.openweathermap.org');
+            final storage = CacheAdapter(const FlutterSecureStorage());
             return switch (routeSettings.name) {
-              ConcertListPage.routeName => MultiBlocProvider(
-                  providers: [
-                    BlocProvider.value(
-                      value: ConcertListBodyCubit(
-                        ErrorHandleDecorator<City, City>(RemotelyGeolocateCity(httpAdapter)) as GeolocateCity,
-                      ),
-                    ),
-                  ],
-                  child: concertListPage,
+              ConcertListPage.routeName => ConcertListBlocFactory.instance(
+                  httpAdapter: httpAdapter,
+                  storage: storage,
+                  page: concertListPage,
+                ),
+              WeatherForecastPage.routeName => WeatherBlocFactory.instance(
+                  httpAdapter: httpAdapter,
+                  storage: storage,
                 ),
               _ => const Offstage(),
             };
