@@ -9,23 +9,21 @@ class CacheAdapter implements Storage {
 
   @override
   Future<String> read({required String key}) async {
-    final possibleFailure = ReadingFailure(key: 'key');
     try {
       final value = await box.read(key: key);
       if (value != null) return value;
-      throw possibleFailure;
+      throw ReadingFailure(key: key);
     } on PlatformException {
-      throw possibleFailure;
+      throw ReadingFailure(key: key);
     }
   }
 
   @override
   Future<void> write({required String key, required String value}) async {
-    final possibleFailure = WritingFailure(key: 'key');
     try {
       return box.write(key: key, value: value);
     } on PlatformException {
-      throw possibleFailure;
+      throw WritingFailure(key: key);
     }
   }
 }
