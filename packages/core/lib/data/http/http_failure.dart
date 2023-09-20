@@ -9,3 +9,5 @@ class NotFoundFailure extends HttpFailure {}
 class ServerFailure extends HttpFailure {}
 
 class ClientFailure extends HttpFailure {}
+
+class ConnectionFailure extends HttpFailure {}
