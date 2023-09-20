@@ -6,9 +6,13 @@ import '../../cities.dart';
 import '../mapper/geolocation_mapper.dart';
 
 class RemotelyGeolocateCity implements GeolocateCity {
-  RemotelyGeolocateCity(this.client);
+  RemotelyGeolocateCity({
+    required this.client,
+    required this.storage,
+  });
 
   final HttpClient client;
+  final Write storage;
 
   @override
   Future<List<Geolocation>> call(GeolocationInput params) async {
@@ -19,6 +23,7 @@ class RemotelyGeolocateCity implements GeolocateCity {
       ),
     );
     final listData = jsonDecode(result) as List;
+    storage.write(key: params.cacheKey, value: jsonEncode(result));
     final mapperList = listData.map((e) => GeolocationMapper.fromJson(e, locale: params.locale)).toList();
     return mapperList.asEntityList;
   }

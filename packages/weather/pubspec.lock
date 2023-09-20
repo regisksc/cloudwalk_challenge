@@ -87,7 +87,7 @@ packages:
       path: "../cities"
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   clock:
     dependency: transitive
     description:
@@ -118,7 +118,7 @@ packages:
       path: "../core"
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.2+1"
   coverage:
     dependency: transitive
     description:

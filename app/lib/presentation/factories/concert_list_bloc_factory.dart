@@ -13,7 +13,7 @@ class ConcertListBlocFactory {
     required Widget page,
   }) {
     final remotelyGeolocateCity = ErrorHandleDecorator<List<Geolocation>, GeolocationInput>(
-      RemotelyGeolocateCity(httpAdapter),
+      RemotelyGeolocateCity(client: httpAdapter, storage: storage),
     );
     return MultiBlocProvider(
       providers: [BlocProvider.value(value: ConcertListBodyCubit(remotelyGeolocateCity))],
