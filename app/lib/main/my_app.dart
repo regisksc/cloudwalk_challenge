@@ -10,25 +10,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const concertListPage = ConcertListPage();
+    final httpAdapter = HttpDatasource(client: Client(), baseUrl: 'api.openweathermap.org');
+    final storage = CacheAdapter(const FlutterSecureStorage());
     return MaterialApp(
       restorationScopeId: 'app',
       debugShowCheckedModeBanner: false,
-      initialRoute: WeatherForecastPage.routeName,
+      home: ConcertListBlocFactory.instance(
+        httpAdapter: httpAdapter,
+        storage: storage,
+        page: concertListPage,
+      ),
       onGenerateRoute: (RouteSettings routeSettings) {
         return MaterialPageRoute(
           settings: routeSettings,
           builder: (BuildContext context) {
-            final httpAdapter = HttpDatasource(client: Client(), baseUrl: 'api.openweathermap.org');
-            final storage = CacheAdapter(const FlutterSecureStorage());
             return switch (routeSettings.name) {
-              ConcertListPage.routeName => ConcertListBlocFactory.instance(
-                  httpAdapter: httpAdapter,
-                  storage: storage,
-                  page: concertListPage,
-                ),
               WeatherForecastPage.routeName => WeatherBlocFactory.instance(
                   httpAdapter: httpAdapter,
                   storage: storage,
+                  args: routeSettings.arguments! as WeatherFetchingInput,
                 ),
               _ => const Offstage(),
             };

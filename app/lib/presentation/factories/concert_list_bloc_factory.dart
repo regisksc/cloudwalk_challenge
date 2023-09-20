@@ -14,7 +14,7 @@ class ConcertListBlocFactory {
   }) {
     final remotelyGeolocateCity = ErrorHandleDecorator<List<Geolocation>, GeolocationInput>(
       RemotelyGeolocateCity(httpAdapter),
-    ) as GeolocateCity;
+    );
     return MultiBlocProvider(
       providers: [BlocProvider.value(value: ConcertListBodyCubit(remotelyGeolocateCity))],
       child: page,

@@ -23,7 +23,7 @@ void main() {
   setUp(() {
     inputParams = WeatherFetchingInput(
       latitude: faker.geo.latitude(),
-      longitude: faker.geo.longitude(),
+      longitude: faker.geo.longitude(), cityName: '',
     );
     client = MockClient();
     storage = MockWrite();

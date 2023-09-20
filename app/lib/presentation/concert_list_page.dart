@@ -1,20 +1,14 @@
+import 'dart:async';
+
+import 'package:cities/cities.dart';
 import 'package:flutter/material.dart';
 
-import 'exports/exports.dart';
 import 'presentation.dart';
 
 class ConcertListPage extends StatefulWidget {
   const ConcertListPage({
     super.key,
-    this.locations = const <String>[
-      'Silverstone, UK',
-      'São Paulo, Brazil',
-      'Melbourne, Australia',
-      'Monte Carlo, Monaco',
-    ],
   });
-
-  final List<String> locations;
 
   static const String routeName = '/concerts';
 
@@ -25,54 +19,56 @@ class ConcertListPage extends StatefulWidget {
 class _ConcertListPageState extends State<ConcertListPage> {
   bool get hasConnection => true;
 
+  bool _appBarIsSearching = false;
+  final _textController = TextEditingController();
+  Timer? _debounce;
+
+  late final ConcertListBodyCubit _cubit;
+
   @override
   void initState() {
+    _cubit = context.read<ConcertListBodyCubit>();
     super.initState();
   }
 
   @override
   void dispose() {
-    // context.read<ConcertListAppBarCubit>().close();
-    // context.read<ConcertListBodyCubit>().close();
-    // context.read<ConnectivityCubit>().close();
+    _cubit.close();
+    _debounce?.cancel();
+    _textController.dispose();
     super.dispose();
+  }
+
+  void _onTextChanged(String value) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(
+      const Duration(seconds: 2),
+      () => context.read<ConcertListBodyCubit>().geolocateCity(
+            GeolocationInput(cityName: value.isNotEmpty ? value : ''),
+          ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Next concerts'),
+        title: !_appBarIsSearching
+            ? const Text('Next concerts')
+            : TextField(
+                controller: _textController,
+                decoration: const InputDecoration(hintText: 'Get weather for a city', border: InputBorder.none),
+                onChanged: (value) => _onTextChanged(value),
+              ),
         actions: [
+          Icon(hasConnection ? FeatherIcons.wifi : FeatherIcons.wifi),
           IconButton(
-            splashColor: Colors.transparent,
-            icon: const Icon(FeatherIcons.wifi),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(FeatherIcons.search),
-            onPressed: () {},
+            icon: _appBarIsSearching ? const Icon(FeatherIcons.x) : const Icon(FeatherIcons.search),
+            onPressed: () => setState(() => _appBarIsSearching = !_appBarIsSearching),
           ),
         ],
       ),
-      body: ListView.builder(
-        restorationId: ConcertListPage.routeName,
-        itemCount: widget.locations.length,
-        itemBuilder: (BuildContext context, int index) {
-          final location = widget.locations[index].split(',').first;
-
-          return ListTile(
-            title: Text(location),
-            leading: const CircleAvatar(child: Icon(FeatherIcons.mapPin)),
-            onTap: () {
-              // Navigator.restorablePushNamed(
-              //   context,
-              //   ConcertDetailsView.routeName,
-              // );
-            },
-          );
-        },
-      ),
+      body: const BodyList(),
     );
   }
 }

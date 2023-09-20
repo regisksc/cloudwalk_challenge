@@ -2,11 +2,13 @@ import 'package:core/core.dart';
 
 class WeatherFetchingInput extends Equatable {
   const WeatherFetchingInput({
+    required this.cityName,
     required this.latitude,
     required this.longitude,
     this.locale,
   });
 
+  final String cityName;
   final double latitude;
   final double longitude;
   final String? locale;

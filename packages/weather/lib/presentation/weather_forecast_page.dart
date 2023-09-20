@@ -8,11 +8,9 @@ class WeatherForecastPage extends StatefulWidget {
   const WeatherForecastPage({
     super.key,
     required this.input,
-    required this.title,
   });
 
   final WeatherFetchingInput input;
-  final String title;
 
   static const String routeName = '/weather';
 
@@ -47,7 +45,7 @@ class _WeatherForecastPageState extends State<WeatherForecastPage> {
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(flex: 8, child: PageHeaderWidget(title: widget.title)),
+              Expanded(flex: 8, child: PageHeaderWidget(title: widget.input.cityName)),
               Expanded(
                 flex: 20,
                 child: BlocBuilder<CurrentWeatherCubit, CurrentWeatherState>(

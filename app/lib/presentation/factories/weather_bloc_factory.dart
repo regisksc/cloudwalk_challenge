@@ -8,6 +8,7 @@ class WeatherBlocFactory {
   static MultiBlocProvider instance({
     required HttpClient httpAdapter,
     required Storage storage,
+    required WeatherFetchingInput args,
   }) {
     final remoteCurrent = ErrorHandleDecorator<WeatherForecast, WeatherFetchingInput>(
       RemotelyFetchCurrentWeather(client: httpAdapter, storage: storage),
@@ -22,9 +23,13 @@ class WeatherBlocFactory {
         BlocProvider.value(value: CurrentWeatherCubit(remoteCurrent)),
         BlocProvider.value(value: WeatherForecastCubit(remoteFiveDays)),
       ],
-      child: const WeatherForecastPage(
-        input: WeatherFetchingInput(latitude: 0, longitude: 0),
-        title: 'Liverpool',
+      child: WeatherForecastPage(
+        input: WeatherFetchingInput(
+          cityName: args.cityName,
+          latitude: args.latitude,
+          longitude: args.longitude,
+          locale: args.locale,
+        ),
       ),
     );
   }

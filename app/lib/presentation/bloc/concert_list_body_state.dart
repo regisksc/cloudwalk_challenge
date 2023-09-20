@@ -4,8 +4,14 @@ import 'package:core/core.dart';
 abstract class ConcertListBodyState extends Equatable {}
 
 class NextConcerts extends ConcertListBodyState {
+  List<String> get nextConcertCityNames => <String>[
+        'Silverstone, UK',
+        'São Paulo, Brazil',
+        'Melbourne, Australia',
+        'Monte Carlo, Monaco',
+      ];
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [nextConcertCityNames];
 }
 
 class Loading extends ConcertListBodyState {

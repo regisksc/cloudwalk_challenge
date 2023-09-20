@@ -15,7 +15,7 @@ void main() {
   setUp(() {
     mockFetchCurrentWeather = MockFetchCurrentWeather();
   });
-  const input = WeatherFetchingInput(latitude: 0.0, longitude: 0.0);
+  const input = WeatherFetchingInput(latitude: 0.0, longitude: 0.0, cityName: '');
 
   setUpAll(() {
     registerFallbackValue(input);

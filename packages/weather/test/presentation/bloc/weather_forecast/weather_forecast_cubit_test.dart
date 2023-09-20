@@ -18,7 +18,7 @@ void main() {
   });
 
   group('WeatherForecastCubit', () {
-    const input = WeatherFetchingInput(latitude: 0.0, longitude: 0.0);
+    const input = WeatherFetchingInput(latitude: 0.0, longitude: 0.0, cityName: '');
 
     blocTest<WeatherForecastCubit, WeatherForecastState>(
       'emits loading and loaded when successful',

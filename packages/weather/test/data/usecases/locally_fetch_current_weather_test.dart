@@ -11,7 +11,7 @@ void main() {
   final jsonString = fixture('sao_paulo_current_weather_fixture.json');
   final json = jsonDecode(jsonString) as Map<String, dynamic>;
 
-  const params = WeatherFetchingInput(latitude: 0.0, longitude: 0.0, locale: 'en_US');
+  const params = WeatherFetchingInput(latitude: 0.0, longitude: 0.0, locale: 'en_US', cityName: '');
   final key = params.cacheKey;
 
   group('LocallyFetchCurrentWeather', () {
