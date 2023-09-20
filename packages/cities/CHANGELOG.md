@@ -1,3 +1,8 @@
+## 0.0.3
+
+ - **FIX**(app,cities): corrects the city geolocation business rule.
+ - **FEAT**(weather): creates weather_forecast_page.
+
 ## 0.0.2
 
  - **REFACTOR**(cities,weather): removes error handling from usecase implementation.

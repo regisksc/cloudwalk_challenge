@@ -1,3 +1,9 @@
+## 0.0.2+1
+
+ - **REFACTOR**(core): moves getter to related package.
+ - **FIX**(app,cities): corrects the city geolocation business rule.
+ - **FIX**(core): fixes debugPrint on sucess.
+
 ## 0.0.2
 
  - **REFACTOR**(core): adds a default http method to requests.
