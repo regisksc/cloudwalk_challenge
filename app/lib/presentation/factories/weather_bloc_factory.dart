@@ -19,12 +19,8 @@ class WeatherBlocFactory {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(
-          value: WeatherCubit(
-            fetchCurrentWeather: remoteCurrent,
-            fetchWeatherForecast: remoteFiveDays,
-          ),
-        ),
+        BlocProvider.value(value: CurrentWeatherCubit(remoteCurrent)),
+        BlocProvider.value(value: WeatherForecastCubit(remoteFiveDays)),
       ],
       child: const WeatherForecastPage(
         input: WeatherFetchingInput(latitude: 0, longitude: 0),

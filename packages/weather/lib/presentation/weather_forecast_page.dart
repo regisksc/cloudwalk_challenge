@@ -21,12 +21,22 @@ class WeatherForecastPage extends StatefulWidget {
 }
 
 class _WeatherForecastPageState extends State<WeatherForecastPage> {
+  late CurrentWeatherCubit _currentWeatherCubit;
+  late WeatherForecastCubit _weatherForecastCubit;
   @override
   void initState() {
     super.initState();
+    _currentWeatherCubit = context.read<CurrentWeatherCubit>();
+    _weatherForecastCubit = context.read<WeatherForecastCubit>();
+    _currentWeatherCubit.getCurrentWeather(widget.input);
+    _weatherForecastCubit.getWeatherForecast(widget.input);
+  }
 
-    context.read<WeatherCubit>().getCurrentWeather(widget.input);
-    context.read<WeatherCubit>().getWeatherForecast(widget.input);
+  @override
+  void dispose() {
+    _currentWeatherCubit.close();
+    _weatherForecastCubit.close();
+    super.dispose();
   }
 
   @override
@@ -39,31 +49,15 @@ class _WeatherForecastPageState extends State<WeatherForecastPage> {
             children: [
               Expanded(flex: 8, child: PageHeaderWidget(title: widget.title)),
               Expanded(
-                flex: 15,
-                child: BlocBuilder<WeatherCubit, WeatherState>(
-                  builder: (context, state) {
-                    if (state is CurrentWeatherLoading) return WeatherForecastList.loading();
-                    if (state is CurrentWeatherError) return WeatherForecastList.error();
-                    if (state is CurrentWeatherLoaded) {
-                      return WeatherForecastList(title: 'current condition', forecasts: [state.weather]);
-                    } else {
-                      return const Offstage();
-                    }
-                  },
+                flex: 20,
+                child: BlocBuilder<CurrentWeatherCubit, CurrentWeatherState>(
+                  builder: (context, state) => WeatherForecastList(state: state, title: 'current condition'),
                 ),
               ),
               Expanded(
-                flex: 52,
-                child: BlocBuilder<WeatherCubit, WeatherState>(
-                  builder: (context, state) {
-                    if (state is WeatherForecastLoading) return WeatherForecastList.loading();
-                    if (state is WeatherForecastError) return WeatherForecastList.error();
-                    if (state is WeatherForecastLoaded) {
-                      return WeatherForecastList(title: 'next 5 days', forecasts: state.forecasts.sublist(0, 5));
-                    } else {
-                      return const Offstage();
-                    }
-                  },
+                flex: 72,
+                child: BlocBuilder<WeatherForecastCubit, WeatherForecastState>(
+                  builder: (context, state) => WeatherForecastList(state: state, title: 'next five days'),
                 ),
               ),
             ],
@@ -75,46 +69,45 @@ class _WeatherForecastPageState extends State<WeatherForecastPage> {
 }
 
 class WeatherForecastList extends StatelessWidget {
-  const WeatherForecastList({
-    super.key,
-    this.title,
-    this.forecasts,
-    this.errorWidget,
-  });
+  const WeatherForecastList({required this.title, required this.state});
 
-  factory WeatherForecastList.error() {
-    _hasError = true;
-    return const WeatherForecastList();
-  }
-
-  factory WeatherForecastList.loading() {
-    _isLoading = true;
-    return const WeatherForecastList();
-  }
-
-  static bool _hasError = false;
-  static bool _isLoading = false;
-
-  final String? title;
-  final List<WeatherForecast>? forecasts;
-  final Widget? errorWidget;
+  final String title;
+  final WeatherState state;
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) return const CircularProgressIndicator.adaptive();
-    if (_hasError) return const Center(child: Icon(FeatherIcons.alertOctagon, color: Colors.red, size: 32));
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .02),
       child: Column(
         children: [
-          Text(title!, style: Theme.of(context).primaryTextTheme.headlineSmall?.copyWith(color: Colors.black87)),
-          Expanded(
-            child: ListView.builder(
-              itemCount: forecasts!.length,
-              physics: forecasts!.length <= 5 ? const NeverScrollableScrollPhysics() : const BouncingScrollPhysics(),
-              itemBuilder: (context, index) => DayForecastWidget(forecasts![index]),
-            ),
+          Text(
+            title,
+            style: Theme.of(context).primaryTextTheme.headlineSmall?.copyWith(color: Colors.black87),
           ),
+          Expanded(
+            child: Builder(
+              builder: (context) {
+                if (state is LoadingState) {
+                  return Container(
+                    alignment: Alignment.center,
+                    height: 40,
+                    width: 40,
+                    child: const CircularProgressIndicator.adaptive(),
+                  );
+                } else if (state is WeatherError)
+                  return const Icon(FeatherIcons.alertOctagon, color: Colors.red, size: 32);
+                else if (state is CurrentWeatherLoaded) {
+                  return DayForecastWidget((state as CurrentWeatherLoaded).weather);
+                }
+                return ListView.builder(
+                  itemCount: (state as WeatherForecastLoaded).forecasts.length,
+                  itemBuilder: (context, index) {
+                    return DayForecastWidget((state as WeatherForecastLoaded).forecasts[index]);
+                  },
+                );
+              },
+            ),
+          )
         ],
       ),
     );

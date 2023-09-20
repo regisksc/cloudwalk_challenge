@@ -1,0 +1,39 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Flutter: Launch App",
+      "request": "launch",
+      "type": "dart",
+      "program": "app/lib/main/main.dart"
+    },
+
+    {
+      "name": "Flutter: Run All App Tests",
+      "request": "launch",
+      "type": "dart",
+      "program": "app/test/widget_test.dart"
+    },
+
+    {
+      "name": "Flutter: Run All Core Tests",
+      "request": "launch",
+      "type": "dart",
+      "program": "packages/core/test"
+    },
+
+    {
+      "name": "Flutter: Run All Weather Tests",
+      "request": "launch",
+      "type": "dart",
+      "program": "packages/weather/test"
+    },
+
+    {
+      "name": "Flutter: Run All Cities Tests",
+      "request": "launch",
+      "type": "dart",
+      "program": "packages/cities/test"
+    }
+  ]
+}

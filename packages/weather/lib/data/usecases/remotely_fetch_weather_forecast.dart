@@ -20,9 +20,8 @@ class RemotelyFetchWeatherForecast implements FetchWeatherForecast {
         ),
       ),
     );
-    final json = jsonDecode(result) as Map<String, dynamic>;
-    storage.write(key: 'list_${params.cacheKey}', value: jsonEncode(json));
-    final listData = json['list'] as List<dynamic>;
+    storage.write(key: 'list_${params.cacheKey}', value: jsonEncode(result));
+    final listData = result['list'] as List<dynamic>;
     final mapperList = listData.map((e) => WeatherForecastMapper.fromJson(e)).toList();
     return mapperList.asEntities;
   }
