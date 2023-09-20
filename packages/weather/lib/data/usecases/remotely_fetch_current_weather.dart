@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:core/exports/exports.dart';
 
 import '../../weather.dart';
@@ -19,8 +21,8 @@ class RemotelyFetchCurrentWeather implements FetchCurrentWeather {
         ),
       ),
     );
-    storage.write(key: params.cacheKey, value: result.toString());
-    final entity = WeatherForecastMapper.fromJson(result).asEntity;
-    return entity;
+    final json = jsonDecode(result) as Map<String, dynamic>;
+    storage.write(key: params.cacheKey, value: jsonEncode(json));
+    return WeatherForecastMapper.fromJson(json).asEntity;
   }
 }
