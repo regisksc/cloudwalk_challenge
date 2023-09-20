@@ -21,7 +21,7 @@ class RemotelyFetchCurrentWeather implements FetchCurrentWeather {
         ),
       ),
     );
-    final json = jsonDecode(result) as Map<String, dynamic>;
+    final json = jsonDecode(jsonEncode(result)) as Map<String, dynamic>;
     storage.write(key: params.cacheKey, value: jsonEncode(json));
     return WeatherForecastMapper.fromJson(json).asEntity;
   }
