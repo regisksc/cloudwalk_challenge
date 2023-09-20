@@ -22,7 +22,7 @@ class RemotelyGeolocateCity implements GeolocateCity {
         queries: ApiHelper.makeGeolocationQuery(query: params.cityName, locale: params.locale),
       ),
     );
-    final listData = jsonDecode(result) as List;
+    final listData = jsonDecode(jsonEncode(result)) as List;
     storage.write(key: params.cacheKey, value: jsonEncode(result));
     final mapperList = listData.map((e) => GeolocationMapper.fromJson(e, locale: params.locale)).toList();
     return mapperList.asEntityList;
