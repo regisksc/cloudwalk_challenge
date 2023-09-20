@@ -24,6 +24,7 @@ class ConcertListBodyCubit extends Cubit<ConcertListBodyState> {
       }).toList());
       final geolocations = await futures;
       final geolocatedCities = geolocations.map((e) => e.firstOrNull ?? Geolocation(name: '')).toList();
+      initialCities = geolocatedCities;
       emit(NextConcerts(initialCities: geolocatedCities));
     } catch (e) {
       final message = e is ServerFailure

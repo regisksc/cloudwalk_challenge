@@ -87,7 +87,7 @@ packages:
       path: "../packages/cities"
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   clock:
     dependency: transitive
     description:
@@ -118,7 +118,7 @@ packages:
       path: "../packages/core"
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.2+1"
   coverage:
     dependency: transitive
     description:
@@ -753,7 +753,7 @@ packages:
       path: "../packages/weather"
       relative: true
     source: path
-    version: "0.0.2"
+    version: "0.0.3"
   web:
     dependency: transitive
     description:
