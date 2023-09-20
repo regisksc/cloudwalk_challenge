@@ -11,11 +11,13 @@ class MockGeolocateCity extends Mock implements Usecase<List<Geolocation>, Geolo
 class MockGeolocation extends Mock implements Geolocation {}
 
 void main() {
-  late MockGeolocateCity mockGeolocateCity;
+  late MockGeolocateCity mockGeolocateCityRemotely;
+  late MockGeolocateCity mockGeolocateCityLocally;
   late List<Geolocation> mockGeolocations;
 
   setUp(() {
-    mockGeolocateCity = MockGeolocateCity();
+    mockGeolocateCityRemotely = MockGeolocateCity();
+    mockGeolocateCityLocally = MockGeolocateCity();
     mockGeolocations = List.generate(5, (i) => MockGeolocation());
   });
 
@@ -23,39 +25,66 @@ void main() {
     registerFallbackValue(GeolocationInput(cityName: faker.address.city()));
   });
 
-  blocTest<ConcertListBodyCubit, ConcertListBodyState>(
-    'emits Loading and DataFetched states when geolocateACity is successful',
-    build: () {
-      when(() => mockGeolocateCity(any())).thenAnswer((_) async => mockGeolocations);
-      return ConcertListBodyCubit(mockGeolocateCity);
-    },
-    act: (sut) => sut.geolocateACity('CityName'),
-    expect: () => [Loading(), DataFetched(mockGeolocations)],
-  );
+  group('remote tests - ', () {
+    blocTest<ConcertListBodyCubit, ConcertListBodyState>(
+      'emits Loading and DataFetched states when geolocateACity is successful',
+      build: () {
+        when(() => mockGeolocateCityRemotely(any())).thenAnswer((_) async => mockGeolocations);
+        return ConcertListBodyCubit(mockGeolocateCityRemotely, mockGeolocateCityLocally);
+      },
+      act: (sut) => sut.geolocateACity('CityName'),
+      expect: () => [Loading(), DataFetched(mockGeolocations)],
+    );
 
-  blocTest<ConcertListBodyCubit, ConcertListBodyState>(
-    'emits Loading and FetchFailed states when geolocateACity throws a Failure',
-    build: () {
-      when(() => mockGeolocateCity(any())).thenThrow(ServerFailure());
-      return ConcertListBodyCubit(mockGeolocateCity);
-    },
-    act: (sut) => sut.geolocateACity('CityName'),
-    expect: () => [
-      Loading(),
-      const FetchFailed(errorMessage: 'Our services are unstable, please try again in a few minutes'),
-    ],
-  );
+    blocTest<ConcertListBodyCubit, ConcertListBodyState>(
+      'emits Loading and FetchFailed states when geolocateACity throws a Failure',
+      build: () {
+        when(() => mockGeolocateCityRemotely(any())).thenThrow(ServerFailure());
+        return ConcertListBodyCubit(mockGeolocateCityRemotely, mockGeolocateCityLocally);
+      },
+      act: (sut) => sut.geolocateACity('CityName'),
+      expect: () => [
+        Loading(),
+        const FetchFailed(errorMessage: 'Our services are unstable, please try again in a few minutes'),
+      ],
+    );
 
-  blocTest<ConcertListBodyCubit, ConcertListBodyState>(
-    'emits Loading and FetchFailed states when geolocateACity throws an Error',
-    build: () {
-      when(() => mockGeolocateCity(any())).thenThrow(Exception());
-      return ConcertListBodyCubit(mockGeolocateCity);
-    },
-    act: (sut) => sut.geolocateACity('CityName'),
-    expect: () => [
-      Loading(),
-      const FetchFailed(errorMessage: 'An error occured, please contact Admin'),
-    ],
-  );
+    blocTest<ConcertListBodyCubit, ConcertListBodyState>(
+      'emits Loading and FetchFailed states when geolocateACity throws an Error',
+      build: () {
+        when(() => mockGeolocateCityRemotely(any())).thenThrow(Exception());
+        return ConcertListBodyCubit(mockGeolocateCityRemotely, mockGeolocateCityLocally);
+      },
+      act: (sut) => sut.geolocateACity('CityName'),
+      expect: () => [
+        Loading(),
+        const FetchFailed(errorMessage: 'An error occured, please contact Admin'),
+      ],
+    );
+  });
+
+  group('local tests - ', () {
+    blocTest<ConcertListBodyCubit, ConcertListBodyState>(
+      'emits Loading and DataFetched states when geolocateACity is successful',
+      build: () {
+        when(() => mockGeolocateCityLocally(any())).thenAnswer((_) async => mockGeolocations);
+        return ConcertListBodyCubit(mockGeolocateCityRemotely, mockGeolocateCityLocally);
+      },
+      act: (sut) => sut.geolocateACity('CityName', local: true),
+      expect: () => [Loading(), DataFetched(mockGeolocations)],
+    );
+
+    blocTest<ConcertListBodyCubit, ConcertListBodyState>(
+      'emits Loading and FetchFailed states when geolocateACity throws a ReadingFailure',
+      build: () {
+        when(() => mockGeolocateCityRemotely(any())).thenThrow(ReadingFailure(key: ''));
+        return ConcertListBodyCubit(mockGeolocateCityRemotely, mockGeolocateCityLocally);
+      },
+      act: (sut) => sut.geolocateACity('CityName', local: true),
+      expect: () => [
+        Loading(),
+        const FetchFailed(errorMessage: 'An error occured, please contact Admin', wasNotFound: true),
+      ],
+    );
+  });
 }

@@ -13,7 +13,10 @@ void main() {
       MultiBlocProvider(
         providers: [
           BlocProvider.value(
-            value: ConcertListBodyCubit(ErrorHandleDecorator<List<Geolocation>, GeolocationInput>(MockGeolocateCity())),
+            value: ConcertListBodyCubit(
+              ErrorHandleDecorator<List<Geolocation>, GeolocationInput>(MockGeolocateCity()),
+              MockGeolocateCity(),
+            ),
           )
         ],
         child: const MaterialApp(home: ConcertListPage()),

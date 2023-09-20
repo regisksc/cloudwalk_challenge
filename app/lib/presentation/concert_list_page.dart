@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cities/cities.dart';
 import 'package:flutter/material.dart';
 
 import 'presentation.dart';
@@ -45,7 +44,7 @@ class _ConcertListPageState extends State<ConcertListPage> {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(
       const Duration(seconds: 2),
-      () => _cubit.geolocateCity(GeolocationInput(cityName: value.isNotEmpty ? value : '')),
+      () => _cubit.geolocateACity(value),
     );
   }
 

@@ -3,9 +3,11 @@ import 'package:core/core.dart';
 import '../../presentation.dart';
 
 class ConcertListBodyCubit extends Cubit<ConcertListBodyState> {
-  ConcertListBodyCubit(this.geolocateCity) : super(NextConcerts(initialCities: initialCities));
+  ConcertListBodyCubit(this._geolocateCityRemotely, this._geolocateCityLocally)
+      : super(NextConcerts(initialCities: initialCities));
 
-  final Usecase<List<Geolocation>, GeolocationInput> geolocateCity;
+  final Usecase<List<Geolocation>, GeolocationInput> _geolocateCityRemotely;
+  final Usecase<List<Geolocation>, GeolocationInput> _geolocateCityLocally;
 
   static List<Geolocation> initialCities = <String>[
     'Silverstone, UK',
@@ -14,13 +16,12 @@ class ConcertListBodyCubit extends Cubit<ConcertListBodyState> {
     'Monte Carlo, Monaco',
   ].map((cityName) => Geolocation(name: cityName, country: cityName.split(', ').last)).toList();
 
-  Future geolocalizeStartingList() async {
+  Future geolocalizeStartingList({bool local = false}) async {
     try {
-      final futures = Future.wait(initialCities
-          .map((e) => geolocateCity(
-                GeolocationInput(cityName: e.name.split(', ').first),
-              ))
-          .toList());
+      final futures = Future.wait(initialCities.map((e) {
+        final usecase = local ? _geolocateCityLocally : _geolocateCityRemotely;
+        return usecase(GeolocationInput(cityName: e.name.split(', ').first));
+      }).toList());
       final geolocations = await futures;
       final geolocatedCities = geolocations.map((e) => e.firstOrNull ?? Geolocation(name: '')).toList();
       emit(NextConcerts(initialCities: geolocatedCities));
@@ -35,11 +36,11 @@ class ConcertListBodyCubit extends Cubit<ConcertListBodyState> {
     }
   }
 
-  Future geolocateACity(String cityName) async {
-    print(cityName);
+  Future geolocateACity(String cityName, {bool local = false}) async {
     emit(Loading());
     try {
-      final geolocatedCities = await geolocateCity(GeolocationInput(cityName: cityName));
+      final usecase = local ? _geolocateCityLocally : _geolocateCityRemotely;
+      final geolocatedCities = await usecase(GeolocationInput(cityName: cityName));
       emit(DataFetched(geolocatedCities));
     } catch (e) {
       final message = e is ServerFailure

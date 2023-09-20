@@ -10,10 +10,12 @@ class MockFetchCurrentWeather extends Mock implements Usecase<WeatherForecast, W
 
 void main() {
   late WeatherForecast mockForecast;
-  late MockFetchCurrentWeather mockFetchCurrentWeather;
+  late MockFetchCurrentWeather mockFetchCurrentWeatherRemotely;
+  late MockFetchCurrentWeather mockFetchCurrentWeatherLocally;
 
   setUp(() {
-    mockFetchCurrentWeather = MockFetchCurrentWeather();
+    mockFetchCurrentWeatherRemotely = MockFetchCurrentWeather();
+    mockFetchCurrentWeatherLocally = MockFetchCurrentWeather();
   });
   const input = WeatherFetchingInput(latitude: 0.0, longitude: 0.0, cityName: '');
 
@@ -22,12 +24,12 @@ void main() {
     mockForecast = MockWeatherForecast();
   });
 
-  group('CurrentWeatherCubit', () {
+  group('remote tests - ', () {
     blocTest<CurrentWeatherCubit, CurrentWeatherState>(
       'emits loading and loaded when successful',
       build: () {
-        when(() => mockFetchCurrentWeather(any())).thenAnswer((_) async => mockForecast);
-        return CurrentWeatherCubit(mockFetchCurrentWeather);
+        when(() => mockFetchCurrentWeatherRemotely(any())).thenAnswer((_) async => mockForecast);
+        return CurrentWeatherCubit(mockFetchCurrentWeatherRemotely, mockFetchCurrentWeatherLocally);
       },
       act: (sut) => sut.getCurrentWeather(input), // Change this line
       expect: () => [CurrentWeatherLoading(), CurrentWeatherLoaded(mockForecast)],
@@ -36,11 +38,34 @@ void main() {
     blocTest<CurrentWeatherCubit, CurrentWeatherState>(
       'emits loading and error when an error occurs',
       build: () {
-        final mockUseCase = MockFetchCurrentWeather();
-        when(() => mockUseCase(input)).thenThrow(Exception('An error occurred, please contact Admin'));
-        return CurrentWeatherCubit(mockUseCase);
+        final mockFetchCurrentWeatherRemotely = MockFetchCurrentWeather();
+        when(() => mockFetchCurrentWeatherRemotely(input))
+            .thenThrow(Exception('An error occurred, please contact Admin'));
+        return CurrentWeatherCubit(mockFetchCurrentWeatherRemotely, mockFetchCurrentWeatherLocally);
       },
       act: (sut) => sut.getCurrentWeather(input),
+      expect: () => [CurrentWeatherLoading(), isA<CurrentWeatherError>()],
+    );
+  });
+
+  group('local tests - ', () {
+    blocTest<CurrentWeatherCubit, CurrentWeatherState>(
+      'emits loading and loaded when successful',
+      build: () {
+        when(() => mockFetchCurrentWeatherLocally(any())).thenAnswer((_) async => mockForecast);
+        return CurrentWeatherCubit(mockFetchCurrentWeatherRemotely, mockFetchCurrentWeatherLocally);
+      },
+      act: (sut) => sut.getCurrentWeather(input, local: true),
+      expect: () => [CurrentWeatherLoading(), CurrentWeatherLoaded(mockForecast)],
+    );
+
+    blocTest<CurrentWeatherCubit, CurrentWeatherState>(
+      'emits loading and error when an error occurs',
+      build: () {
+        when(() => mockFetchCurrentWeatherLocally(input)).thenThrow(Exception());
+        return CurrentWeatherCubit(mockFetchCurrentWeatherRemotely, mockFetchCurrentWeatherLocally);
+      },
+      act: (sut) => sut.getCurrentWeather(input, local: true),
       expect: () => [CurrentWeatherLoading(), isA<CurrentWeatherError>()],
     );
   });

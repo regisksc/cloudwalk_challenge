@@ -13,15 +13,17 @@ class WeatherBlocFactory {
     final remoteCurrent = ErrorHandleDecorator<WeatherForecast, WeatherFetchingInput>(
       RemotelyFetchCurrentWeather(client: httpAdapter, storage: storage),
     );
+    final localCurrent = LocallyFetchCurrentWeather(storage);
 
     final remoteFiveDays = ErrorHandleDecorator<List<WeatherForecast>, WeatherFetchingInput>(
       RemotelyFetchWeatherForecast(client: httpAdapter, storage: storage),
     );
+    final localFiveDays = LocallyFetchWeatherForecast(storage);
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(value: CurrentWeatherCubit(remoteCurrent)),
-        BlocProvider.value(value: WeatherForecastCubit(remoteFiveDays)),
+        BlocProvider.value(value: CurrentWeatherCubit(remoteCurrent, localCurrent)),
+        BlocProvider.value(value: WeatherForecastCubit(remoteFiveDays, localFiveDays)),
       ],
       child: WeatherForecastPage(
         input: WeatherFetchingInput(

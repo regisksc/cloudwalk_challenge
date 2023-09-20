@@ -4,15 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../weather.dart';
 
 class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
-  CurrentWeatherCubit(this._fetchCurrentWeather) : super(CurrentWeatherLoading());
+  CurrentWeatherCubit(this._fetchCurrentWeatherRemotely, this._fetchCurrentWeatherLocally)
+      : super(CurrentWeatherLoading());
 
-  final Usecase<WeatherForecast, WeatherFetchingInput> _fetchCurrentWeather;
+  final Usecase<WeatherForecast, WeatherFetchingInput> _fetchCurrentWeatherRemotely;
+  final Usecase<WeatherForecast, WeatherFetchingInput> _fetchCurrentWeatherLocally;
 
-  Future getCurrentWeather(WeatherFetchingInput input) async {
+  Future getCurrentWeather(WeatherFetchingInput input, {bool local = false}) async {
     emit(CurrentWeatherLoading());
 
     try {
-      final weather = await _fetchCurrentWeather(input);
+      final usecase = local ? _fetchCurrentWeatherLocally : _fetchCurrentWeatherRemotely;
+      final weather = await usecase(input);
       emit(CurrentWeatherLoaded(weather));
     } catch (e) {
       String errorMessage;
