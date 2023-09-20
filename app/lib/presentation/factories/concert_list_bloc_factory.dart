@@ -16,7 +16,7 @@ class ConcertListBlocFactory {
       RemotelyGeolocateCity(client: httpAdapter, storage: storage),
     );
     return MultiBlocProvider(
-      providers: [BlocProvider.value(value: ConcertListBodyCubit(remotelyGeolocateCity))],
+      providers: [BlocProvider(create: (context) => ConcertListBodyCubit(remotelyGeolocateCity))],
       child: page,
     );
   }

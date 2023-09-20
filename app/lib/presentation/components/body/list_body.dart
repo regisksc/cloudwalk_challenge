@@ -1,3 +1,4 @@
+import 'package:cities/cities.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
 
@@ -6,37 +7,48 @@ import '../../presentation.dart';
 class BodyList extends StatelessWidget {
   const BodyList({super.key});
 
+  String _formatCityName(Geolocation city) {
+    final cityName = city.localName ?? city.name;
+    final hasCountryName = city.country?.isNotEmpty;
+    final country = hasCountryName ?? false ? ', ${city.country}' : '';
+    return '$cityName$country';
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ConcertListBodyCubit, ConcertListBodyState>(
       builder: (context, state) {
-        return (state is Loading)
-            ? const Center(child: CircularProgressIndicator.adaptive())
-            : ListView.builder(
-                restorationId: ConcertListPage.routeName,
-                itemCount: state is NextConcerts ? state.nextConcertCityNames.length : 1,
-                itemBuilder: (BuildContext context, int index) {
-                  String tileTitle = '';
-                  if (state is NextConcerts) tileTitle = state.nextConcertCityNames[index];
-                  if (state is DataFetched) {
-                    final cityName = state.cities[index].localName ?? state.cities[index].name;
-                    final hasCountryName = state.cities[index].country?.isNotEmpty;
-                    final country = hasCountryName ?? false ? ', ${state.cities[index].country}' : '';
-                    tileTitle = '$cityName$country';
-                  }
-                  if (state is FetchFailed) tileTitle = state.errorMessage;
+        final isDataState = state is NextConcerts || state is DataFetched;
+        return ListView.builder(
+          restorationId: ConcertListPage.routeName,
+          itemCount: isDataState ? state.cities?.length : 1,
+          itemBuilder: (BuildContext context, int index) {
+            String tileTitle = '';
+            if (isDataState) tileTitle = _formatCityName(state.cities![index]);
+            if (state is FetchFailed) tileTitle = state.wasNotFound ? 'City not found' : state.errorMessage;
 
-                  return ListTile(
-                    title: Text(tileTitle),
-                    leading: const CircleAvatar(child: Icon(FeatherIcons.mapPin)),
-                    trailing: const Icon(FeatherIcons.arrowRight),
-                    onTap: () {
-                      Navigator.pushNamed(context, WeatherForecastPage.routeName,
-                          arguments: const WeatherFetchingInput(cityName: '', latitude: 0, longitude: 0, locale: ''));
-                    },
-                  );
-                },
-              );
+            return ListTile(
+              title: Text(tileTitle),
+              leading: const CircleAvatar(child: Icon(FeatherIcons.mapPin)),
+              trailing: () {
+                if (state is FetchFailed) return null;
+                return state.cities?[index].isLoading ?? true
+                    ? const CircularProgressIndicator.adaptive()
+                    : const Icon(FeatherIcons.arrowRight);
+              }(),
+              onTap: (state.cities?[index].isLoading ?? true)
+                  ? null
+                  : () => Navigator.pushNamed(
+                        context,
+                        WeatherForecastPage.routeName,
+                        arguments: WeatherFetchingInput(
+                            cityName: state.cities?[index].localName ?? state.cities?[index].name ?? '',
+                            latitude: state.cities?[index].lat ?? 0,
+                            longitude: state.cities?[index].lon ?? 0),
+                      ),
+            );
+          },
+        );
       },
     );
   }

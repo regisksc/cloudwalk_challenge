@@ -20,7 +20,7 @@ class _ConcertListPageState extends State<ConcertListPage> {
   bool get hasConnection => true;
 
   bool _appBarIsSearching = false;
-  final _textController = TextEditingController();
+  late TextEditingController _textController;
   Timer? _debounce;
 
   late final ConcertListBodyCubit _cubit;
@@ -28,6 +28,8 @@ class _ConcertListPageState extends State<ConcertListPage> {
   @override
   void initState() {
     _cubit = context.read<ConcertListBodyCubit>();
+    _cubit.geolocalizeStartingList();
+    _textController = TextEditingController();
     super.initState();
   }
 
@@ -43,9 +45,7 @@ class _ConcertListPageState extends State<ConcertListPage> {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(
       const Duration(seconds: 2),
-      () => context.read<ConcertListBodyCubit>().geolocateCity(
-            GeolocationInput(cityName: value.isNotEmpty ? value : ''),
-          ),
+      () => _cubit.geolocateCity(GeolocationInput(cityName: value.isNotEmpty ? value : '')),
     );
   }
 
@@ -64,7 +64,10 @@ class _ConcertListPageState extends State<ConcertListPage> {
           Icon(hasConnection ? FeatherIcons.wifi : FeatherIcons.wifi),
           IconButton(
             icon: _appBarIsSearching ? const Icon(FeatherIcons.x) : const Icon(FeatherIcons.search),
-            onPressed: () => setState(() => _appBarIsSearching = !_appBarIsSearching),
+            onPressed: () => setState(() {
+              if (_appBarIsSearching) _textController.clear();
+              _appBarIsSearching = !_appBarIsSearching;
+            }),
           ),
         ],
       ),

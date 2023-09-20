@@ -3,32 +3,35 @@ import 'package:core/core.dart';
 class Geolocation extends Entity {
   Geolocation({
     required this.name,
-    required this.lat,
-    required this.lon,
-    required this.localName,
-    required this.country,
-    required this.state,
+    this.lat,
+    this.lon,
+    this.localName,
+    this.country,
+    this.state,
   }) {
+    final lonInstancedOnly = lat == null && lon != null;
+    final latInstancedOnly = lon == null && lat != null;
+    if (latInstancedOnly || lonInstancedOnly) throw ArgumentError('Geolocation not properly initialized');
     if (!_isValidLatitude(lat)) throw ArgumentError('Invalid latitude');
     if (!_isValidLongitude(lon)) throw ArgumentError('Invalid longitude');
   }
 
   final String name;
-  final double lat;
-  final double lon;
+  final double? lat;
+  final double? lon;
   final String? localName;
   final String? country;
   final String? state;
 
   bool _isValidLatitude(double? value) {
-    if (value == null) return false;
-    return lat >= -90.0 && lat <= 90.0;
+    return (value ?? 0) >= -90.0 && (value ?? 0) <= 90.0;
   }
 
   bool _isValidLongitude(double? value) {
-    if (value == null) return false;
-    return lon >= -180.0 && lon <= 180.0;
+    return (value ?? 0) >= -180.0 && (value ?? 0) <= 180.0;
   }
+
+  bool get isLoading => lat == null && lon == null;
 
   @override
   List<Object?> get props => [name, lat, lon, country, state];

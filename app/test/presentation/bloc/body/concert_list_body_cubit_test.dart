@@ -42,7 +42,7 @@ void main() {
     act: (sut) => sut.geolocateACity('CityName'),
     expect: () => [
       Loading(),
-      FetchFailed(errorMessage: 'Our services are unstable, please try again in a few minutes'),
+      const FetchFailed(errorMessage: 'Our services are unstable, please try again in a few minutes'),
     ],
   );
 
@@ -55,7 +55,7 @@ void main() {
     act: (sut) => sut.geolocateACity('CityName'),
     expect: () => [
       Loading(),
-      FetchFailed(errorMessage: 'An error occured, please contact Admin'),
+      const FetchFailed(errorMessage: 'An error occured, please contact Admin'),
     ],
   );
 }
