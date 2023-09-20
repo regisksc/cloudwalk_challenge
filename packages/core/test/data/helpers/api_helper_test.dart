@@ -17,12 +17,12 @@ void main() {
 
   test('makeForecastQuery should create the correct query map', () {
     final query = ApiHelper.makeForecastQuery(lat: '40.7128', lon: '-74.0060');
-    expect(query, equals({"lat": "40.7128", "lon": "-74.0060", "lang": 'en'}));
+    expect(query, equals({"lat": "40.7128", "lon": "-74.0060", "lang": 'en', "units": "imperial"}));
   });
 
   test('makeForecastQuery should create the correct query map with locale', () {
     final query = ApiHelper.makeForecastQuery(lat: '40.7128', lon: '-74.0060', locale: 'es');
-    expect(query, equals({"lat": "40.7128", "lon": "-74.0060", "lang": 'es'}));
+    expect(query, equals({"lat": "40.7128", "lon": "-74.0060", "lang": 'es', "units": "metric"}));
   });
 
   test('makeUrl should create the correct URL', () {
