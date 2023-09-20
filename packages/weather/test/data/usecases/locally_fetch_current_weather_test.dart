@@ -25,7 +25,7 @@ void main() {
 
     test('should return a WeatherForecast from cached data', () async {
       // Arrange
-      when(() => mockStorage.read(key: key)).thenAnswer((_) => Future.value(jsonEncode(json)));
+      when(() => mockStorage.read(key: key)).thenAnswer((_) async => jsonEncode(json));
 
       // Act
       final result = await locallyFetchCurrentWeather(params);

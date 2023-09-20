@@ -41,7 +41,7 @@ void main() {
       // Arrange: Set up the request and response
       when(
         () => client.request(url: any(named: 'url'), method: any(named: 'method')),
-      ).thenAnswer((_) async => jsonEncode(json));
+      ).thenAnswer((_) async => jsonDecode(jsonEncode(json)));
       when(() => storage.write(key: inputParams.cacheKey, value: any(named: 'value')))
           .thenAnswer((_) => Future.value());
 

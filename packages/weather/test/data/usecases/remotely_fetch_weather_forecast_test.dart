@@ -25,7 +25,8 @@ void main() {
   setUp(() {
     inputParams = WeatherFetchingInput(
       latitude: faker.geo.latitude(),
-      longitude: faker.geo.longitude(), cityName: '',
+      longitude: faker.geo.longitude(),
+      cityName: '',
     );
     client = MockClient();
     storage = MockWrite();
@@ -43,7 +44,7 @@ void main() {
       // Arrange: Set up the request and response
       when(
         () => client.request(url: any(named: 'url'), method: any(named: 'method')),
-      ).thenAnswer((_) async => jsonEncode(json));
+      ).thenAnswer((_) async => jsonDecode(jsonEncode(json)));
       when(
         () => storage.write(key: 'list_${inputParams.cacheKey}', value: any(named: 'value')),
       ).thenAnswer((_) => Future.value());

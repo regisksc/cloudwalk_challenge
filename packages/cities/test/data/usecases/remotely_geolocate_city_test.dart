@@ -33,7 +33,7 @@ void main() {
     // Arrange:
     when(
       () => client.request(url: any(named: 'url'), method: any(named: 'method')),
-    ).thenAnswer((_) async => jsonEncode(jsonList));
+    ).thenAnswer((_) async => jsonDecode(jsonEncode(jsonList)) as List);
     when(
       () => storage.write(key: params.cacheKey, value: any(named: 'value')),
     ).thenAnswer((_) => Future.value());

@@ -12,7 +12,7 @@ class LocallyFetchCurrentWeather implements FetchCurrentWeather {
   @override
   Future<WeatherForecast> call(WeatherFetchingInput params) async {
     final cachedResult = await storage.read(key: params.cacheKey);
-    final json = jsonDecode(jsonEncode(cachedResult)) as Map<String, dynamic>;
+    final json = jsonDecode(cachedResult) as Map<String, dynamic>;
     return WeatherForecastMapper.fromJson(json).asEntity;
   }
 }
