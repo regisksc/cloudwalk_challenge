@@ -13,10 +13,10 @@ class Loading extends ConcertListBodyState {
 }
 
 class DataFetched extends ConcertListBodyState {
-  DataFetched(this.city);
+  DataFetched(this.cities);
 
-  final City city;
-  List<Object?> get props => [city];
+  final List<Geolocation> cities;
+  List<Object?> get props => [cities];
 }
 
 class FetchFailed extends ConcertListBodyState {

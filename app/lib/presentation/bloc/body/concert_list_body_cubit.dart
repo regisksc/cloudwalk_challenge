@@ -5,14 +5,13 @@ import '../../presentation.dart';
 class ConcertListBodyCubit extends Cubit<ConcertListBodyState> {
   ConcertListBodyCubit(this.geolocateCity) : super(NextConcerts());
 
-  final GeolocateCity geolocateCity;
+  final Usecase<List<Geolocation>, GeolocationInput> geolocateCity;
 
   Future geolocateACity(String cityName) async {
     emit(Loading());
     try {
-      final city = City(name: cityName);
-      final geolocatedCity = await geolocateCity(city);
-      emit(DataFetched(geolocatedCity));
+      final geolocatedCities = await geolocateCity(GeolocationInput(cityName: cityName));
+      emit(DataFetched(geolocatedCities));
     } catch (e) {
       final message = e is ServerFailure
           ? 'Our services are unstable, please try again in a few minutes'

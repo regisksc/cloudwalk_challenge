@@ -2,39 +2,34 @@ import 'package:core/core.dart';
 
 class Geolocation extends Entity {
   Geolocation({
-    required this.latitude,
-    required this.longitude,
+    required this.name,
+    required this.lat,
+    required this.lon,
+    required this.localName,
+    required this.country,
+    required this.state,
   }) {
-    if (!_isValidLatitude(latitude)) throw ArgumentError('Invalid latitude');
-    if (!_isValidLongitude(longitude)) throw ArgumentError('Invalid longitude');
+    if (!_isValidLatitude(lat)) throw ArgumentError('Invalid latitude');
+    if (!_isValidLongitude(lon)) throw ArgumentError('Invalid longitude');
   }
 
-  final double latitude;
-  final double longitude;
-
-  @override
-  List<Object?> get props => [latitude, longitude];
-
-  Geolocation copyWith({
-    double? latitude,
-    double? longitude,
-  }) {
-    if (latitude == null && longitude == null) return this;
-    final entity = Geolocation(
-      latitude: latitude ?? this.latitude,
-      longitude: longitude ?? this.longitude,
-    );
-    entity.markAsModified();
-    return entity;
-  }
+  final String name;
+  final double lat;
+  final double lon;
+  final String? localName;
+  final String? country;
+  final String? state;
 
   bool _isValidLatitude(double? value) {
     if (value == null) return false;
-    return latitude >= -90.0 && latitude <= 90.0;
+    return lat >= -90.0 && lat <= 90.0;
   }
 
   bool _isValidLongitude(double? value) {
     if (value == null) return false;
-    return longitude >= -180.0 && longitude <= 180.0;
+    return lon >= -180.0 && lon <= 180.0;
   }
+
+  @override
+  List<Object?> get props => [name, lat, lon, country, state];
 }

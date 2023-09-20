@@ -1,68 +1,42 @@
+import 'dart:convert';
+
 import 'package:cities/cities.dart';
 import 'package:core/core.dart';
-import 'package:faker/faker.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:test/test.dart';
 
-class MockClient extends Mock implements HttpDatasource {}
+import '../../_fixtures/json_fixture_reader.dart';
+
+class MockHttpClient extends Mock implements HttpClient {}
 
 void main() {
-  late HttpClient client;
-  late RemotelyGeolocateCity sut;
-
-  late String cityName;
-  late City inputCity;
-
-  final geolocationJson = [
-    {
-      'name': 'Uberaba',
-      'lat': -19.350876900000003,
-      'lon': -48.24289795348889,
-      'country': 'BR',
-      'state': 'Minas Gerais',
-    },
-  ];
+  late MockHttpClient client;
 
   setUp(() {
-    cityName = faker.address.city();
-    inputCity = City(name: cityName);
-
-    client = MockClient();
-    sut = RemotelyGeolocateCity(client);
+    client = MockHttpClient();
   });
 
   setUpAll(() {
-    registerFallbackValue(HttpMethod.post);
+    registerFallbackValue(HttpMethod.get);
   });
 
-  group('should geolocate a city with coordinates and...', () {
-    late City result;
-    final expectedLatitude = geolocationJson.first['lat'];
-    final expectedLongitude = geolocationJson.first['lon'];
+  test('Successful Geolocation', () async {
+    final remotelyGeolocateCity = RemotelyGeolocateCity(client);
+    const params = GeolocationInput(cityName: 'Test City', locale: 'en');
+    final jsonString = fixture('sao_paulo_geolocation_result_fixture.json');
+    final jsonList = jsonDecode(jsonString) as List;
 
-    setUp(() async {
-      // Arrange: SetUp request
-      when(
-        () => client.request(url: any(named: 'url')),
-      ).thenAnswer((_) async => geolocationJson);
-      // Act: Call the use case with the input city
-      result = await sut(inputCity);
-    });
+    // Arrange:
+    when(
+      () => client.request(url: any(named: 'url'), method: any(named: 'method')),
+    ).thenAnswer((_) async => jsonEncode(jsonList));
 
-    test('is a City entity', () => expect(result, isA<City>()));
-    test('has a Geolocation entity stored', () => expect(result.geolocation, isA<Geolocation>()));
-    test('its Geolocation has a latitude', () => expect(result.geolocation?.latitude, isNotNull));
-    test('latitude is as expected', () => expect(result.geolocation?.latitude, expectedLatitude));
-    test('its Geolocation has a longitude', () => expect(result.geolocation?.longitude, isNotNull));
-    test('longitude is as expected', () => expect(result.geolocation?.longitude, expectedLongitude));
-    test('throw a ServerFailure when lat and lon return as empty', () {
-      when(() => client.request(url: any(named: 'url'))).thenAnswer((_) async {
-        final json = geolocationJson.first;
-        json['lat'] = '';
-        json['lon'] = '';
-        return [json];
-      });
-      expect(() => sut(inputCity), throwsA(isA<ServerFailure>()));
-    });
+    // Act
+    final geolocations = await remotelyGeolocateCity.call(params);
+
+    // Assert
+    verify(() => client.request(url: any(named: 'url'), method: any(named: 'method')));
+    expect(geolocations, isA<List<Geolocation>>());
+    expect(geolocations.length, jsonList.length);
   });
 }

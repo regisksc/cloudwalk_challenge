@@ -8,11 +8,9 @@ void main() {
     expect(actualPath, expectedPath);
   });
 
-  
-
   test('makeGeolocationQuery should create the correct query map', () {
-    final query = ApiHelper.makeGeolocationQuery('New York');
-    expect(query, equals({"q": "New York"}));
+    final query = ApiHelper.makeGeolocationQuery(query: 'New York');
+    expect(query, equals({"q": "New York", 'lang': 'en'}));
   });
 
   test('makeForecastQuery should create the correct query map', () {
@@ -27,12 +25,11 @@ void main() {
 
   test('makeUrl should create the correct URL', () {
     const path = '/geo/1.0/direct';
-    final queries = ApiHelper.makeGeolocationQuery("New York");
+    final queries = ApiHelper.makeGeolocationQuery(query: "New York", locale: 'pt_BR');
     final url = ApiHelper.makeUrl(path: path, queries: queries);
 
-    // Replace with the expected URL based on your API structure
     const expectedUrl =
-        "http://api.openweathermap.org/geo/1.0/direct?q=New+York&appid=586fe855ce36758b2c7e6256cda20241";
+        "http://api.openweathermap.org/geo/1.0/direct?q=New+York&lang=pt_BR&appid=586fe855ce36758b2c7e6256cda20241";
 
     expect(url, equals(expectedUrl));
   });

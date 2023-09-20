@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:core/core.dart';
 
 import '../../cities.dart';
+import '../mapper/geolocation_mapper.dart';
 
 class RemotelyGeolocateCity implements GeolocateCity {
   RemotelyGeolocateCity(this.client);
@@ -8,23 +11,15 @@ class RemotelyGeolocateCity implements GeolocateCity {
   final HttpClient client;
 
   @override
-  Future<City> call(City params) async {
-    final city = params;
-
-    final geolocationJson = await client.request(
+  Future<List<Geolocation>> call(GeolocationInput params) async {
+    final result = await client.request(
       url: ApiHelper.makeUrl(
         path: ApiHelper.geolocationPath,
-        queries: ApiHelper.makeGeolocationQuery(city.name),
+        queries: ApiHelper.makeGeolocationQuery(query: params.cityName, locale: params.locale),
       ),
-    ) as List<Map<String, dynamic>>;
-
-    // ignore: unnecessary_null_comparison
-    if (geolocationJson == null) throw NotFoundFailure();
-    final latitude = geolocationJson.first['lat'];
-    final longitude = geolocationJson.first['lon'];
-    if (latitude == '' || longitude == '') throw ServerFailure();
-    final geolocation = Geolocation(latitude: latitude, longitude: longitude);
-
-    return city.copyWith(geolocation: geolocation);
+    );
+    final listData = jsonDecode(result) as List;
+    final mapperList = listData.map((e) => GeolocationMapper.fromJson(e, locale: params.locale)).toList();
+    return mapperList.asEntityList;
   }
 }

@@ -3,7 +3,11 @@ abstract class ApiHelper {
 
   static String get geolocationPath => '/geo/1.0/direct';
   static Map<String, dynamic> get _apiKey => {"appid": "586fe855ce36758b2c7e6256cda20241"};
-  static Map<String, dynamic> makeGeolocationQuery(String query) => {"q": query};
+  static Map<String, dynamic> makeGeolocationQuery({required String query, String? locale}) {
+    final lang = locale ?? 'en';
+    return {"q": query, "lang": lang};
+  }
+
   static Map<String, dynamic> makeForecastQuery({required String lat, required String lon, String? locale = 'en'}) {
     final lang = locale ?? 'en';
     return {
