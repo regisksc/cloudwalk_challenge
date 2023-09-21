@@ -7,10 +7,10 @@ import 'package:weather/weather.dart';
 import '../../_fixtures/json_fixture_reader.dart';
 import '../../_utils/mocks.dart';
 
-
 void main() {
   final jsonString = fixture('sao_paulo_weather_fixture.json');
-  final json = jsonDecode(jsonString) as Map<String, dynamic>;
+  final Map<String, dynamic> json = jsonDecode(jsonString);
+  json['list'] = jsonEncode(json['list']);
 
   const params = WeatherFetchingInput(latitude: 0.0, longitude: 0.0, locale: 'en_US', cityName: '');
   final key = 'list_${params.cacheKey}';

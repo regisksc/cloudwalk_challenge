@@ -7,10 +7,14 @@ class ForecastTime extends Equatable {
     required int unixTimestamp,
     String? locale = 'en_US',
   }) {
-    formatted = DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000).formatted(locale);
+    _date = DateTime.fromMillisecondsSinceEpoch(unixTimestamp * 1000);
+    formatted = _date.formatted(locale);
   }
 
+  late DateTime _date;
   late String formatted;
+
+  int get toUnix => _date.toUtc().millisecondsSinceEpoch ~/ 1000;
   @override
   List<Object?> get props => [formatted];
 }

@@ -13,10 +13,13 @@ class LocallyFetchWeatherForecast implements FetchWeatherForecast {
   Future<List<WeatherForecast>> call(WeatherFetchingInput params) async {
     final cachedResult = await storage.read(key: 'list_${params.cacheKey}');
 
-    final Map<String, dynamic> cachedData = jsonDecode(cachedResult);
-    final List forecastsData = cachedData['list'];
-    final forecasts =
-        forecastsData.map((json) => WeatherForecastMapper.fromJson(json as Map<String, dynamic>).asEntity).toList();
+    final Map<String, dynamic> cachedData = jsonDecode(cachedResult) as Map<String, dynamic>;
+    final List forecastsData = jsonDecode(cachedData['list']);
+    final forecasts = forecastsData
+        .map((json) => WeatherForecastMapper.fromJson(
+              json as Map<String, dynamic>,
+            ).asEntity)
+        .toList();
 
     return forecasts;
   }

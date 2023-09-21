@@ -37,12 +37,24 @@ class DayForecastWidget extends StatelessWidget {
             child: _wrapWithGreyPill(
               context,
               width: 120,
-              child: Text(
-                '${timeSplit[0]}\n${timeSplit[1]}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).primaryTextTheme.labelMedium?.copyWith(color: Colors.white70),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    '${timeSplit[0]}\n${timeSplit[1]}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).primaryTextTheme.labelMedium?.copyWith(color: Colors.white70),
+                  ),
+                  Text(
+                    forecast.timeSinceLastModified(),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).primaryTextTheme.labelMedium?.copyWith(color: Colors.white70, fontSize: 8),
+                  ),
+                ],
               ),
             ),
           ),
@@ -60,11 +72,14 @@ class DayForecastWidget extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Column(
-                              children: [
-                                Expanded(child: TemperatureContainer(label: 'min', temperature: forecast.tempMin)),
-                                Expanded(child: TemperatureContainer(label: 'max', temperature: forecast.tempMax))
-                              ],
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Expanded(child: TemperatureContainer(label: 'min', temperature: forecast.tempMin)),
+                                  Expanded(child: TemperatureContainer(label: 'max', temperature: forecast.tempMax))
+                                ],
+                              ),
                             ),
                             const SizedBox(width: 10),
                             _WindSpeedIndicator(speed: forecast.windSpeed),

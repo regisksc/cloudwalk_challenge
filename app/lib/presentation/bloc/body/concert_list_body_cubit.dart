@@ -15,8 +15,13 @@ class ConcertListBodyCubit extends Cubit<ConcertListBodyState> {
     'Melbourne, Australia',
     'Monte Carlo, Monaco',
   ]
-      .map((cityName) =>
-          Geolocation(name: cityName, country: cityName.split(', ').last, modifiedWhen: DateTime.now().toUtc()))
+      .map(
+        (cityName) => Geolocation(
+          name: cityName.split(', ').first,
+          country: cityName.split(', ').last,
+          modifiedWhen: DateTime.now().toUtc(),
+        ),
+      )
       .toList();
 
   Future geolocalizeStartingList() async {

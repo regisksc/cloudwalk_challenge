@@ -53,7 +53,9 @@ class _ConcertListPageState extends State<ConcertListPage> {
     return Scaffold(
       appBar: AppBar(
         title: !_appBarIsSearching
-            ? const Text('Next concerts')
+            ? BlocBuilder<ConcertListBodyCubit, ConcertListBodyState>(
+                builder: (context, state) => Text(state is! NextConcerts ? 'Result' : 'Next concerts'),
+              )
             : TextField(
                 controller: _textController,
                 decoration: const InputDecoration(hintText: 'Get weather for a city', border: InputBorder.none),
@@ -75,4 +77,3 @@ class _ConcertListPageState extends State<ConcertListPage> {
     );
   }
 }
-

@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart';
 
 import '../data.dart';
@@ -33,14 +35,16 @@ class HttpDatasource implements HttpClient {
       };
       if (futureResponse != null) response = await futureResponse.timeout(const Duration(seconds: 10));
     } catch (error) {
+      if (error is TimeoutException || error is SocketException) rethrow;
       throw ServerFailure();
     }
     return _handleResponse(response);
   }
 
   dynamic _handleResponse(Response response) {
+    if (response.body == "[]") throw NotFoundFailure();
     return switch (response.statusCode) {
-      200 => response.body.isEmpty ? null : jsonDecode(response.body),
+      200 => jsonDecode(response.body),
       204 => null,
       400 => throw BadRequestFailure(),
       401 || 403 => throw UnauthorizedFailure(),

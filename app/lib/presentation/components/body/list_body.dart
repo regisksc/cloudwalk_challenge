@@ -23,12 +23,13 @@ class BodyList extends StatelessWidget {
           restorationId: ConcertListPage.routeName,
           itemCount: isDataState ? state.cities?.length : 1,
           itemBuilder: (BuildContext context, int index) {
-            String tileTitle = '';
-            if (isDataState) tileTitle = _formatCityName(state.cities![index]);
-            if (state is FetchFailed) tileTitle = state.wasNotFound ? 'City not found' : state.errorMessage;
-
             return ListTile(
-              title: Text(tileTitle),
+              title: Text(() {
+                if (isDataState) return _formatCityName(state.cities![index]);
+                if (state is FetchFailed) return state.wasNotFound ? 'City not found' : state.errorMessage;
+                if (state is Loading) return 'fetching ...';
+                return '';
+              }()),
               leading: const CircleAvatar(child: Icon(FeatherIcons.mapPin)),
               trailing: () {
                 if (state is FetchFailed) return null;
