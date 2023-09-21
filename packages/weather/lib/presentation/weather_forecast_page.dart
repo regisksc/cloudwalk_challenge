@@ -43,7 +43,6 @@ class _WeatherForecastPageState extends State<WeatherForecastPage> {
       child: SafeArea(
         child: Scaffold(
           body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(flex: 8, child: PageHeaderWidget(title: widget.input.cityName)),
               Expanded(
@@ -74,40 +73,68 @@ class WeatherForecastList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final maxMarginWidth = width * 0.08;
+    final marginPercentage = maxMarginWidth < width * 0.02 ? maxMarginWidth / width : 0.02;
+
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .02),
+      padding: EdgeInsets.symmetric(horizontal: width * marginPercentage),
       child: Column(
+        
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            title,
-            style: Theme.of(context).primaryTextTheme.headlineSmall?.copyWith(color: Colors.black87),
+          Center(
+            child: Text(
+              title,
+              style: Theme.of(context).primaryTextTheme.headlineSmall?.copyWith(color: Colors.black87),
+            ),
           ),
           Expanded(
             child: Builder(
               builder: (context) {
+                final height = MediaQuery.of(context).size.height;
                 if (state is LoadingState) {
-                  return Container(
-                    alignment: Alignment.center,
-                    height: 40,
-                    width: 40,
-                    child: const CircularProgressIndicator.adaptive(),
-                  );
+                  return const Loader();
                 } else if (state is WeatherError)
-                  return const Icon(FeatherIcons.alertOctagon, color: Colors.red, size: 32);
+                  return const AlertIcon();
                 else if (state is CurrentWeatherLoaded) {
                   return DayForecastWidget((state as CurrentWeatherLoaded).weather);
                 }
-                return ListView.builder(
+                return ListView.separated(
+                  separatorBuilder: (context, index) =>
+                      SizedBox(height: (state as WeatherForecastLoaded).forecasts.length > 1 ? height * .0156 : 0),
                   itemCount: (state as WeatherForecastLoaded).forecasts.length,
-                  itemBuilder: (context, index) {
-                    return DayForecastWidget((state as WeatherForecastLoaded).forecasts[index]);
-                  },
+                  itemBuilder: (context, index) => DayForecastWidget((state as WeatherForecastLoaded).forecasts[index]),
                 );
               },
             ),
           )
         ],
       ),
+    );
+  }
+}
+
+class AlertIcon extends StatelessWidget {
+  const AlertIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Align(
+      alignment: Alignment.topCenter,
+      child: Icon(FeatherIcons.alertOctagon, color: Colors.red, size: 32),
+    );
+  }
+}
+
+class Loader extends StatelessWidget {
+  const Loader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Align(
+      alignment: Alignment.topCenter,
+      child: CircularProgressIndicator.adaptive(backgroundColor: Colors.deepOrangeAccent),
     );
   }
 }
