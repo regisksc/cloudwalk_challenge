@@ -1,14 +1,10 @@
 import 'package:cities/cities.dart';
 import 'package:cloudwalk_challenge/presentation/presentation.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
-class MockGeolocateCity extends Mock implements Usecase<List<Geolocation>, GeolocationInput> {}
-
-class MockConnectivity extends Mock implements Connectivity {}
+import '../_utils/mocks.dart';
 
 void main() {
   testWidgets('ConcertListPage widget test', (WidgetTester tester) async {

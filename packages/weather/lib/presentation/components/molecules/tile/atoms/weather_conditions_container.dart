@@ -27,6 +27,7 @@ class _LargerScreenLayout extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
+      key: const ValueKey('_LargerScreenLayout'),
       children: [
         _makeInfoLine(
           context,
@@ -88,6 +89,7 @@ class _ShorterScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: const ValueKey('_ShorterScreenLayout'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(

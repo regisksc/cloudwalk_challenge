@@ -20,48 +20,51 @@ class BodyList extends StatelessWidget {
     return BlocBuilder<ConcertListBodyCubit, ConcertListBodyState>(
       builder: (context, state) {
         final isDataState = state is NextConcerts || state is DataFetched;
-        return ListView.builder(
-          restorationId: ConcertListPage.routeName,
-          itemCount: isDataState ? state.cities?.length : 1,
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-              title: Text(() {
-                if (isDataState) return _formatCityName(state.cities![index]);
-                if (state is FetchFailed) return state.wasNotFound ? 'City not found' : state.errorMessage;
-                if (state is Loading) return 'fetching ...';
-                return '';
-              }(),
-                  style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width * 0.04,
-                  )),
-              leading: Container(
-                padding: EdgeInsets.all(_longestSide * .01),
-                decoration: const BoxDecoration(shape: BoxShape.circle),
-                child: FittedBox(
-                  child: Icon(FeatherIcons.mapPin, size: _longestSide * 0.05),
+        return Material(
+          child: ListView.builder(
+            restorationId: ConcertListPage.routeName,
+            itemCount: isDataState ? state.cities?.length : 1,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                key: Key('tile_${isDataState ? (state as NextConcerts).cities![index].name : ''}'),
+                title: Text(() {
+                  if (isDataState) return _formatCityName(state.cities![index]);
+                  if (state is FetchFailed) return state.wasNotFound ? 'City not found' : state.errorMessage;
+                  if (state is Loading) return 'fetching ...';
+                  return '';
+                }(),
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
+                    )),
+                leading: Container(
+                  padding: EdgeInsets.all(_longestSide * .01),
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: FittedBox(
+                    child: Icon(FeatherIcons.mapPin, size: _longestSide * 0.05),
+                  ),
                 ),
-              ),
-              trailing: () {
-                if (state is FetchFailed) return null;
-                return state.cities?[index].isLoading ?? true
-                    ? const CircularProgressIndicator.adaptive()
-                    : Icon(
-                        FeatherIcons.arrowRight,
-                        size: MediaQuery.of(context).size.width * 0.06,
-                      );
-              }(),
-              onTap: (state.cities?[index].isLoading ?? true)
-                  ? null
-                  : () => Navigator.pushNamed(
-                        context,
-                        WeatherForecastPage.routeName,
-                        arguments: WeatherFetchingInput(
-                            cityName: state.cities?[index].localName ?? state.cities?[index].name ?? '',
-                            latitude: state.cities?[index].lat ?? 0,
-                            longitude: state.cities?[index].lon ?? 0),
-                      ),
-            );
-          },
+                trailing: () {
+                  if (state is FetchFailed) return null;
+                  return state.cities?[index].isLoading ?? true
+                      ? const CircularProgressIndicator.adaptive()
+                      : Icon(
+                          FeatherIcons.arrowRight,
+                          size: MediaQuery.of(context).size.width * 0.06,
+                        );
+                }(),
+                onTap: (state.cities?[index].isLoading ?? true)
+                    ? null
+                    : () => Navigator.pushNamed(
+                          context,
+                          WeatherForecastPage.routeName,
+                          arguments: WeatherFetchingInput(
+                              cityName: state.cities?[index].localName ?? state.cities?[index].name ?? '',
+                              latitude: state.cities?[index].lat ?? 0,
+                              longitude: state.cities?[index].lon ?? 0),
+                        ),
+              );
+            },
+          ),
         );
       },
     );

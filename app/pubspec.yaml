@@ -29,6 +29,7 @@ dev_dependencies:
   bloc_test: ^9.1.4
   mocktail: ^1.0.0
   faker: ^2.1.0
+  golden_toolkit: ^0.15.0
 
 flutter:
   uses-material-design: true

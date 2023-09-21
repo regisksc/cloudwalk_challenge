@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import '../../../_utils/app_wrapper.dart';
 import '../../bloc/body/concert_list_body_cubit_test.dart';
-import '../../concert_list_page_test.dart';
 
 class MockConcertListBodyCubit extends Mock implements ConcertListBodyCubit {}
 
@@ -20,24 +20,7 @@ void main() {
       mockCubit = MockConcertListBodyCubit();
     });
 
-    Future<void> initApp(WidgetTester tester) async {
-      await tester.pumpWidget(
-        MultiBlocProvider(
-          providers: [
-            BlocProvider.value(
-              value: ConcertListBodyCubit(
-                ConnectionHandleDecorator(
-                  cacheDecoratee: MockGeolocateCity(),
-                  remoteDecoratee: ErrorHandleDecorator<List<Geolocation>, GeolocationInput>(MockGeolocateCity()),
-                  connectivity: MockConnectivity(),
-                ),
-              ),
-            )
-          ],
-          child: const MaterialApp(home: ConcertListPage()),
-        ),
-      );
-    }
+    
 
     testWidgets('Widget should be visible when state is DataFetched', (WidgetTester tester) async {
       when(() => mockCubit.state).thenReturn(DataFetched(<Geolocation>[MockGeolocation()]));
