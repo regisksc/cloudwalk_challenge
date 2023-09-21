@@ -1,4 +1,5 @@
 import 'package:cities/cities.dart';
+import 'package:faker/faker.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -11,7 +12,7 @@ void main() {
           lon: -75.0, // Valid longitude
           localName: 'Local Name',
           country: 'Test Country',
-          state: 'Test State',
+          state: 'Test State', modifiedWhen: faker.date.dateTime().toUtc(),
         ),
         returnsNormally,
       );
@@ -25,7 +26,7 @@ void main() {
           lon: -75.0, // Valid longitude
           localName: 'Local Name',
           country: 'Test Country',
-          state: 'Test State',
+          state: 'Test State', modifiedWhen: faker.date.dateTime().toUtc(),
         ),
         throwsA(isA<ArgumentError>().having((e) => e.message, 'message', 'Invalid latitude')),
       );
@@ -39,7 +40,7 @@ void main() {
           lon: -181.0, // Invalid longitude
           localName: 'Local Name',
           country: 'Test Country',
-          state: 'Test State',
+          state: 'Test State', modifiedWhen: faker.date.dateTime().toUtc(),
         ),
         throwsA(isA<ArgumentError>().having((e) => e.message, 'message', 'Invalid longitude')),
       );
@@ -52,7 +53,7 @@ void main() {
         lon: -75.0, // Valid longitude
         localName: 'Local Name',
         country: 'Test Country',
-        state: 'Test State',
+        state: 'Test State', modifiedWhen: faker.date.dateTime().toUtc(),
       );
 
       expect(geolocation.props,

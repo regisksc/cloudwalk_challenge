@@ -30,7 +30,7 @@ void main() {
     final jsonString = fixture('sao_paulo_geolocation_result_fixture.json');
     final jsonList = jsonDecode(jsonString) as List;
 
-    // Arrange:
+    // Arrange: 
     when(
       () => client.request(url: any(named: 'url'), method: any(named: 'method')),
     ).thenAnswer((_) async => jsonDecode(jsonEncode(jsonList)) as List);

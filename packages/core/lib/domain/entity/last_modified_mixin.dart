@@ -1,12 +1,13 @@
 mixin LastModifiedMixin {
   DateTime? lastModified;
 
-  void markAsModified() {
-    lastModified = DateTime.now();
+  // ignore: use_setters_to_change_properties
+  void markAsModified(DateTime whenModified) {
+    lastModified = whenModified;
   }
 
   String timeSinceLastModified() {
-    final now = DateTime.now();
+    final now = DateTime.now().toUtc();
     String result = "Just now";
     if (lastModified == null) return result;
     final difference = now.difference(lastModified!);

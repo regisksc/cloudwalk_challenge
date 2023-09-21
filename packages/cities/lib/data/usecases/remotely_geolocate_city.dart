@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:core/core.dart';
 
 import '../../cities.dart';
-import '../mapper/geolocation_mapper.dart';
 
 class RemotelyGeolocateCity implements GeolocateCity {
   RemotelyGeolocateCity({

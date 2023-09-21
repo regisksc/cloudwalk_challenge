@@ -14,7 +14,10 @@ class ConcertListBodyCubit extends Cubit<ConcertListBodyState> {
     'São Paulo, Brazil',
     'Melbourne, Australia',
     'Monte Carlo, Monaco',
-  ].map((cityName) => Geolocation(name: cityName, country: cityName.split(', ').last)).toList();
+  ]
+      .map((cityName) =>
+          Geolocation(name: cityName, country: cityName.split(', ').last, modifiedWhen: DateTime.now().toUtc()))
+      .toList();
 
   Future geolocalizeStartingList({bool local = false}) async {
     try {
@@ -23,7 +26,9 @@ class ConcertListBodyCubit extends Cubit<ConcertListBodyState> {
         return usecase(GeolocationInput(cityName: e.name.split(', ').first));
       }).toList());
       final geolocations = await futures;
-      final geolocatedCities = geolocations.map((e) => e.firstOrNull ?? Geolocation(name: '')).toList();
+      final geolocatedCities = geolocations
+          .map((e) => e.firstOrNull ?? Geolocation(name: '', modifiedWhen: DateTime.now().toUtc()))
+          .toList();
       initialCities = geolocatedCities;
       emit(NextConcerts(initialCities: geolocatedCities));
     } catch (e) {

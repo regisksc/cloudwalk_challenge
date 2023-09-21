@@ -7,7 +7,8 @@ class WeatherForecastMapper {
     required this.tempMax,
     required this.weatherDescription,
     required this.windSpeed,
-  });
+    DateTime? modifiedWhen,
+  }) : _modifiedWhen = modifiedWhen ?? DateTime.now().toUtc();
 
   factory WeatherForecastMapper.fromJson(Map<String, dynamic> json, {String? locale}) {
     return WeatherForecastMapper(
@@ -25,6 +26,29 @@ class WeatherForecastMapper {
   final Temperature tempMax;
   final String weatherDescription;
   final WindSpeed windSpeed;
+  final DateTime _modifiedWhen;
+
+  DateTime get modifiedWhen => _modifiedWhen;
+
+  WeatherForecastMapper copyWith({DateTime? modifiedWhen}) {
+    return WeatherForecastMapper(
+      time: time,
+      tempMin: tempMin,
+      tempMax: tempMax,
+      weatherDescription: weatherDescription,
+      windSpeed: windSpeed,
+      modifiedWhen: modifiedWhen ?? _modifiedWhen,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'dt': _modifiedWhen,
+        'main': {'temp_min': tempMin.value, 'temp_max': tempMax.value},
+        'weather': [
+          {'description': weatherDescription}
+        ],
+        'wind': {'speed': windSpeed.value},
+      };
 }
 
 extension WeatherForecastMapperExtensions on WeatherForecastMapper {
@@ -35,6 +59,7 @@ extension WeatherForecastMapperExtensions on WeatherForecastMapper {
       tempMax: tempMax,
       weatherDescription: weatherDescription,
       windSpeed: windSpeed,
+      modifiedWhen: _modifiedWhen,
     );
   }
 }

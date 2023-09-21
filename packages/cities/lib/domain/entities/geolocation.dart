@@ -8,7 +8,8 @@ class Geolocation extends Entity {
     this.localName,
     this.country,
     this.state,
-  }) {
+    required DateTime modifiedWhen,
+  }) : super(modifiedWhen) {
     final lonInstancedOnly = lat == null && lon != null;
     final latInstancedOnly = lon == null && lat != null;
     if (latInstancedOnly || lonInstancedOnly) throw ArgumentError('Geolocation not properly initialized');

@@ -9,15 +9,17 @@ class WeatherForecast extends Entity {
     required this.tempMax,
     required this.weatherDescription,
     required this.windSpeed,
-  });
+    required DateTime modifiedWhen,
+  }) : super(modifiedWhen);
 
   static WeatherForecast get empty => WeatherForecast(
-      tempMax: Temperature(value: 0),
-      time: ForecastTime(unixTimestamp: 0),
-      tempMin: Temperature(value: 0),
-      weatherDescription: '',
-      windSpeed: WindSpeed(value: 0),
-    );
+        tempMax: Temperature(value: 0),
+        time: ForecastTime(unixTimestamp: 0),
+        tempMin: Temperature(value: 0),
+        weatherDescription: '',
+        windSpeed: WindSpeed(value: 0),
+        modifiedWhen: DateTime.now().toUtc(),
+      );
 
   final ForecastTime time;
   final Temperature tempMin;
