@@ -51,29 +51,48 @@ class _ConcertListPageState extends State<ConcertListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: !_appBarIsSearching
-            ? BlocBuilder<ConcertListBodyCubit, ConcertListBodyState>(
-                builder: (context, state) => Text(state is! NextConcerts ? 'Result' : 'Next concerts'),
-              )
-            : TextField(
-                controller: _textController,
-                decoration: const InputDecoration(hintText: 'Get weather for a city', border: InputBorder.none),
-                onChanged: (value) => _onTextChanged(value),
-              ),
-        actions: [
-          Icon(hasConnection ? FeatherIcons.wifi : FeatherIcons.wifi),
-          IconButton(
-            icon: _appBarIsSearching ? const Icon(FeatherIcons.x) : const Icon(FeatherIcons.search),
-            onPressed: () => setState(() {
-              if (_appBarIsSearching) _textController.clear();
-              _appBarIsSearching = !_appBarIsSearching;
-            }),
-          ),
-        ],
-      ),
+      appBar: _makeAppBar(context),
       body: const BodyList(),
       floatingActionButton: const ShowInitialListFab(),
+    );
+  }
+
+  AppBar _makeAppBar(BuildContext context) {
+    return AppBar(
+      title: !_appBarIsSearching
+          ? BlocBuilder<ConcertListBodyCubit, ConcertListBodyState>(
+              builder: (context, state) {
+                final titleText = state is! NextConcerts ? 'Result' : 'Next concerts';
+
+                return LayoutBuilder(
+                  builder: (context, constraints) {
+                    final fontSize = constraints.maxWidth * 0.05;
+                    return Text(titleText, style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold));
+                  },
+                );
+              },
+            )
+          : TextField(
+              controller: _textController,
+              decoration: const InputDecoration(hintText: 'Get weather for a city', border: InputBorder.none),
+              onChanged: (value) => _onTextChanged(value),
+            ),
+      actions: [
+        const SizedBox(),
+        SizedBox(
+          height: MediaQuery.of(context).size.longestSide * .06,
+          width: MediaQuery.of(context).size.longestSide * .06,
+          child: FittedBox(
+            child: IconButton(
+              icon: _appBarIsSearching ? const Icon(FeatherIcons.x) : const Icon(FeatherIcons.search),
+              onPressed: () => setState(() {
+                if (_appBarIsSearching) _textController.clear();
+                _appBarIsSearching = !_appBarIsSearching;
+              }),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

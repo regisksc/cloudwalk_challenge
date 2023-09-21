@@ -2,7 +2,7 @@ import 'package:cities/cities.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
 
-import '../../presentation.dart';
+import '../../../presentation.dart';
 
 class BodyList extends StatelessWidget {
   const BodyList({super.key});
@@ -16,6 +16,7 @@ class BodyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _longestSide = MediaQuery.of(context).size.longestSide;
     return BlocBuilder<ConcertListBodyCubit, ConcertListBodyState>(
       builder: (context, state) {
         final isDataState = state is NextConcerts || state is DataFetched;
@@ -29,13 +30,25 @@ class BodyList extends StatelessWidget {
                 if (state is FetchFailed) return state.wasNotFound ? 'City not found' : state.errorMessage;
                 if (state is Loading) return 'fetching ...';
                 return '';
-              }()),
-              leading: const CircleAvatar(child: Icon(FeatherIcons.mapPin)),
+              }(),
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                  )),
+              leading: Container(
+                padding: EdgeInsets.all(_longestSide * .01),
+                decoration: const BoxDecoration(shape: BoxShape.circle),
+                child: FittedBox(
+                  child: Icon(FeatherIcons.mapPin, size: _longestSide * 0.05),
+                ),
+              ),
               trailing: () {
                 if (state is FetchFailed) return null;
                 return state.cities?[index].isLoading ?? true
                     ? const CircularProgressIndicator.adaptive()
-                    : const Icon(FeatherIcons.arrowRight);
+                    : Icon(
+                        FeatherIcons.arrowRight,
+                        size: MediaQuery.of(context).size.width * 0.06,
+                      );
               }(),
               onTap: (state.cities?[index].isLoading ?? true)
                   ? null
