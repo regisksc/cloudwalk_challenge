@@ -42,7 +42,7 @@ class WeatherForecastMapper {
   }
 
   Map<String, dynamic> toJson() => {
-        'dt': _modifiedWhen,
+        'dt': _modifiedWhen.toUtc().millisecondsSinceEpoch,
         'main': {'temp_min': tempMin.value, 'temp_max': tempMax.value},
         'weather': [
           {'description': weatherDescription}

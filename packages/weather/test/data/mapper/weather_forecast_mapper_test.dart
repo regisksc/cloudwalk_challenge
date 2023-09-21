@@ -54,4 +54,100 @@ void main() {
       test('is as expected', () => expect(sut.windSpeed, equals(expectedWindSpeed)));
     });
   });
+
+  test('toJson should return a valid JSON map', () {
+    final weatherForecastMapper = WeatherForecastMapper(
+      time: ForecastTime(unixTimestamp: 1631881200),
+      tempMin: Temperature(value: 10.0),
+      tempMax: Temperature(value: 20.0),
+      weatherDescription: 'Sunny',
+      windSpeed: WindSpeed(value: 5.0),
+      modifiedWhen: DateTime.now().toUtc(),
+    );
+
+    final json = weatherForecastMapper.toJson();
+
+    expect(json, isA<Map<String, dynamic>>());
+    expect(json['dt'], isA<int>());
+    expect(json['main'], isA<Map<String, dynamic>>());
+    expect(json['main']['temp_min'], 10.0);
+    expect(json['main']['temp_max'], 20.0);
+    expect(json['weather'], isA<List<dynamic>>());
+    expect(json['weather'][0], isA<Map<String, dynamic>>());
+    expect(json['weather'][0]['description'], 'Sunny');
+    expect(json['wind'], isA<Map<String, dynamic>>());
+    expect(json['wind']['speed'], 5.0);
+  });
+
+  test('copyWith should create a new instance with modifiedWhen updated', () {
+    final originalModifiedWhen = DateTime(2023, 9, 17, 12);
+    final weatherForecastMapper = WeatherForecastMapper(
+      time: ForecastTime(unixTimestamp: 1631881200),
+      tempMin: Temperature(value: 10.0),
+      tempMax: Temperature(value: 20.0),
+      weatherDescription: 'Sunny',
+      windSpeed: WindSpeed(value: 5.0),
+      modifiedWhen: originalModifiedWhen,
+    );
+
+    final newModifiedWhen = DateTime(2023, 9, 18, 12);
+    final updatedWeatherForecastMapper = weatherForecastMapper.copyWith(modifiedWhen: newModifiedWhen);
+
+    expect(updatedWeatherForecastMapper, isA<WeatherForecastMapper>());
+    expect(updatedWeatherForecastMapper.modifiedWhen, newModifiedWhen);
+  });
+
+  test('asEntity should return a WeatherForecast entity', () {
+    final weatherForecastMapper = WeatherForecastMapper(
+      time: ForecastTime(unixTimestamp: 1631881200),
+      tempMin: Temperature(value: 10.0),
+      tempMax: Temperature(value: 20.0),
+      weatherDescription: 'Sunny',
+      windSpeed: WindSpeed(value: 5.0),
+      modifiedWhen: DateTime.now().toUtc(),
+    );
+
+    final weatherForecast = weatherForecastMapper.asEntity;
+
+    expect(weatherForecast, isA<WeatherForecast>());
+    expect(weatherForecast.time, isA<ForecastTime>());
+    expect(weatherForecast.tempMin, isA<Temperature>());
+    expect(weatherForecast.tempMax, isA<Temperature>());
+    expect(weatherForecast.weatherDescription, 'Sunny');
+    expect(weatherForecast.windSpeed, isA<WindSpeed>());
+  });
+
+  test('asEntities should return a list of WeatherForecast entities', () {
+    final weatherForecastMapperList = [
+      WeatherForecastMapper(
+        time: ForecastTime(unixTimestamp: 1631881200),
+        tempMin: Temperature(value: 10.0),
+        tempMax: Temperature(value: 20.0),
+        weatherDescription: 'Sunny',
+        windSpeed: WindSpeed(value: 5.0),
+        modifiedWhen: DateTime.now().toUtc(),
+      ),
+      WeatherForecastMapper(
+        time: ForecastTime(unixTimestamp: 1631882200),
+        tempMin: Temperature(value: 15.0),
+        tempMax: Temperature(value: 25.0),
+        weatherDescription: 'Cloudy',
+        windSpeed: WindSpeed(value: 6.0),
+        modifiedWhen: DateTime.now().toUtc(),
+      ),
+    ];
+
+    final weatherForecasts = weatherForecastMapperList.asEntities;
+
+    expect(weatherForecasts, isA<List<WeatherForecast>>());
+    expect(weatherForecasts.length, 2);
+
+    for (final weatherForecast in weatherForecasts) {
+      expect(weatherForecast, isA<WeatherForecast>());
+      expect(weatherForecast.time, isA<ForecastTime>());
+      expect(weatherForecast.tempMin, isA<Temperature>());
+      expect(weatherForecast.tempMax, isA<Temperature>());
+      expect(weatherForecast.windSpeed, isA<WindSpeed>());
+    }
+  });
 }

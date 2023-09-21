@@ -1,4 +1,5 @@
 import 'package:cities/cities.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 
@@ -12,13 +13,16 @@ class ConcertListBlocFactory {
     required Storage storage,
     required Widget page,
   }) {
-    final remotelyGeolocateCity = ErrorHandleDecorator<List<Geolocation>, GeolocationInput>(
-      RemotelyGeolocateCity(client: httpAdapter, storage: storage),
+    final decoratedGeolocateCityUsecase = ConnectionHandleDecorator(
+      cacheDecoratee: LocallyGeolocateCity(storage: storage),
+      remoteDecoratee: ErrorHandleDecorator<List<Geolocation>, GeolocationInput>(
+        RemotelyGeolocateCity(client: httpAdapter, storage: storage),
+      ),
+      connectivity: Connectivity(),
     );
-    final locallyGeolocateCity = LocallyGeolocateCity(storage: storage);
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => ConcertListBodyCubit(remotelyGeolocateCity, locallyGeolocateCity)),
+        BlocProvider(create: (context) => ConcertListBodyCubit(decoratedGeolocateCityUsecase)),
       ],
       child: page,
     );

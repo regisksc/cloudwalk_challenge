@@ -14,6 +14,6 @@ class LocallyGeolocateCity implements GeolocateCity {
     final cachedResult = await storage.read(key: params.cacheKey);
     final jsonList = jsonDecode(cachedResult) as List;
     final mapperList = jsonList.map((e) => GeolocationMapper.fromJson(e, locale: params.locale)).toList();
-    return mapperList.asEntityList;
+    return mapperList.asEntities;
   }
 }

@@ -56,7 +56,7 @@ extension GeolocationMapperExtension on GeolocationMapper {
 }
 
 extension GeolocationMapperListExtension on List<GeolocationMapper> {
-  List<Geolocation> get asEntityList => map((e) => Geolocation(
+  List<Geolocation> get asEntities => map((e) => Geolocation(
         name: e.name,
         lat: e.lat,
         lon: e.lon,
