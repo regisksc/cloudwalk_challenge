@@ -71,6 +71,8 @@ class _ConcertListPageState extends State<ConcertListPage> {
         ],
       ),
       body: const BodyList(),
+      floatingActionButton: const ShowInitialListFab(),
     );
   }
 }
+

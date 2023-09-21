@@ -20,6 +20,10 @@ class ConcertListBodyCubit extends Cubit<ConcertListBodyState> {
       .toList();
 
   Future geolocalizeStartingList() async {
+    if (initialCities.first.lat != null) {
+      emit(NextConcerts(initialCities: initialCities));
+      return;
+    }
     try {
       final futures = Future.wait(
           initialCities.map((e) => _geolocateCity(GeolocationInput(cityName: e.name.split(', ').first))).toList());
