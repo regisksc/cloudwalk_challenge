@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../presentation.dart';
 
 class ConcertListBlocFactory {
+  // coverage:ignore-line
   ConcertListBlocFactory._();
 
   static MultiBlocProvider instance({

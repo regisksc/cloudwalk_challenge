@@ -1,4 +1,5 @@
 abstract class WeatherConstants {
+  // coverage:ignore-line
   WeatherConstants._();
 
   static String get forecastPath => '/data/2.5/forecast';

@@ -1,4 +1,5 @@
 abstract class ApiHelper {
+  // coverage:ignore-line
   ApiHelper._();
 
   static String get geolocationPath => '/geo/1.0/direct';

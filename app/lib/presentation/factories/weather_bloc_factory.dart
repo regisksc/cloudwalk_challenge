@@ -5,6 +5,7 @@ import 'package:weather/weather.dart';
 import '../exports/exports.dart';
 
 class WeatherBlocFactory {
+  // coverage:ignore-line
   WeatherBlocFactory._();
   static MultiBlocProvider instance({
     required HttpClient httpAdapter,

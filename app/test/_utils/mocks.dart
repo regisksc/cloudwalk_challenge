@@ -9,3 +9,7 @@ class MockConcertListBodyCubit extends Mock implements ConcertListBodyCubit {}
 class MockGeolocateCity extends Mock implements Usecase<List<Geolocation>, GeolocationInput> {}
 
 class MockConnectivity extends Mock implements Connectivity {}
+
+class MockHttpClient extends Mock implements HttpClient {}
+
+class MockStorage extends Mock implements Storage {}

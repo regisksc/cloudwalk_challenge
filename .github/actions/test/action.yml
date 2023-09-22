@@ -44,7 +44,7 @@ runs:
       with:
         path: app/coverage/lcov.info
         exclude: "**/*.*.dart app/lib/main.dart"
-        min_coverage: 0
+        min_coverage: 80
 
     - name: report tests
       uses: dorny/test-reporter@v1.6.0
