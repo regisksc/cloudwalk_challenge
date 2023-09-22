@@ -7,7 +7,7 @@ import '../../../../_utils/app_wrapper.dart';
 import '../../../bloc/body/concert_list_body_cubit_test.dart';
 
 void main() {
-  testWidgets('Test BodyList Widget', (WidgetTester tester) async {
+  testWidgets('list_body', (WidgetTester tester) async {
     final geolocaton = Geolocation(name: 'test', modifiedWhen: DateTime.now());
     final list = [geolocaton];
     final bloc = ConcertListBodyCubit(MockGeolocateCity());
@@ -21,11 +21,10 @@ void main() {
 
     await expectLater(
       find.byType(BodyList),
-      matchesGoldenFile('body_list.png'),
+      matchesGoldenFile('list_body.png'),
     );
 
     await tester.tap(find.byType(ListTile).at(0));
     await tester.pump();
-    await tester.pumpAndSettle(const Duration(seconds: 1));
   });
 }

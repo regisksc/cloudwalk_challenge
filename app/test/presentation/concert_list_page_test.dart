@@ -25,7 +25,7 @@ void main() {
       ),
     );
 
-    expect(find.text('Next concerts'), findsOneWidget);
+    expect(find.text(ConcertListPage.nextConcertsText), findsOneWidget);
     expect(find.byType(ListTile), findsNWidgets(4));
     expect(find.byIcon(FeatherIcons.search), findsOneWidget);
   });

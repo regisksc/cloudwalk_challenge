@@ -10,6 +10,8 @@ class ConcertListPage extends StatefulWidget {
   });
 
   static const String routeName = '/concerts';
+  static const String nextConcertsText = 'Next concerts';
+  static const String resultsText = 'Results';
 
   @override
   State<ConcertListPage> createState() => _ConcertListPageState();
@@ -59,10 +61,14 @@ class _ConcertListPageState extends State<ConcertListPage> {
 
   AppBar _makeAppBar(BuildContext context) {
     return AppBar(
+      backgroundColor: Colors.transparent,
+      shadowColor: Colors.transparent,
+      foregroundColor: Colors.grey.shade900,
       title: !_appBarIsSearching
           ? BlocBuilder<ConcertListBodyCubit, ConcertListBodyState>(
               builder: (context, state) {
-                final titleText = state is! NextConcerts ? 'Result' : 'Next concerts';
+                final titleText =
+                    state is NextConcerts ? ConcertListPage.nextConcertsText : ConcertListPage.resultsText;
 
                 return LayoutBuilder(
                   builder: (context, constraints) {
