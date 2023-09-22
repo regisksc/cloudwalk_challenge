@@ -1,0 +1,117 @@
+{"protocolVersion":"0.1.1","runnerVersion":"1.24.3","pid":63049,"type":"start","time":0}
+{"suite":{"id":0,"platform":"vm","path":"/home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/http/http_method_test.dart"},"type":"suite","time":0}
+{"test":{"id":1,"name":"loading /home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/http/http_method_test.dart","suiteID":0,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":0}
+{"suite":{"id":2,"platform":"vm","path":"/home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/http/http_failure_test.dart"},"type":"suite","time":4}
+{"test":{"id":3,"name":"loading /home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/http/http_failure_test.dart","suiteID":2,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":4}
+{"suite":{"id":4,"platform":"vm","path":"/home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/helpers/api_helper_test.dart"},"type":"suite","time":5}
+{"test":{"id":5,"name":"loading /home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/helpers/api_helper_test.dart","suiteID":4,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":5}
+{"suite":{"id":6,"platform":"vm","path":"/home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/datasources/cache_adapter_test.dart"},"type":"suite","time":5}
+{"test":{"id":7,"name":"loading /home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/datasources/cache_adapter_test.dart","suiteID":6,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":5}
+{"suite":{"id":8,"platform":"vm","path":"/home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/datasources/http_datasource_test.dart"},"type":"suite","time":5}
+{"test":{"id":9,"name":"loading /home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/datasources/http_datasource_test.dart","suiteID":8,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":5}
+{"suite":{"id":10,"platform":"vm","path":"/home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/entity/last_modified_mixin_test.dart"},"type":"suite","time":5}
+{"test":{"id":11,"name":"loading /home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/entity/last_modified_mixin_test.dart","suiteID":10,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":5}
+{"suite":{"id":12,"platform":"vm","path":"/home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/connection_handle_decorator_test.dart"},"type":"suite","time":6}
+{"test":{"id":13,"name":"loading /home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/connection_handle_decorator_test.dart","suiteID":12,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":6}
+{"suite":{"id":14,"platform":"vm","path":"/home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/error_handle_decorator_test.dart"},"type":"suite","time":7}
+{"test":{"id":15,"name":"loading /home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/error_handle_decorator_test.dart","suiteID":14,"groupIDs":[],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":7}
+{"count":8,"time":7,"type":"allSuites"}
+
+[{"event":"test.startedProcess","params":{"vmServiceUri":null,"observatoryUri":null}}]
+
+[{"event":"test.startedProcess","params":{"vmServiceUri":null,"observatoryUri":null}}]
+
+[{"event":"test.startedProcess","params":{"vmServiceUri":null,"observatoryUri":null}}]
+{"testID":1,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1521}
+{"group":{"id":16,"suiteID":0,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":1,"line":null,"column":null,"url":null},"type":"group","time":1522}
+{"test":{"id":17,"name":"HttpMethodExtension should convert HttpMethod to string correctly","suiteID":0,"groupIDs":[16],"metadata":{"skip":false,"skipReason":null},"line":5,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/http/http_method_test.dart"},"type":"testStart","time":1523}
+{"testID":17,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1538}
+
+[{"event":"test.startedProcess","params":{"vmServiceUri":null,"observatoryUri":null}}]
+{"testID":3,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1682}
+{"group":{"id":18,"suiteID":2,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":null,"column":null,"url":null},"type":"group","time":1682}
+{"test":{"id":19,"name":"HttpFailure should be a subclass of Exception","suiteID":2,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":5,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/http/http_failure_test.dart"},"type":"testStart","time":1682}
+{"testID":19,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1700}
+{"test":{"id":20,"name":"BadRequestFailure should be a subclass of HttpFailure","suiteID":2,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":11,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/http/http_failure_test.dart"},"type":"testStart","time":1700}
+{"testID":20,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1702}
+{"test":{"id":21,"name":"UnauthorizedFailure should be a subclass of HttpFailure","suiteID":2,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":17,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/http/http_failure_test.dart"},"type":"testStart","time":1703}
+{"testID":21,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1705}
+{"test":{"id":22,"name":"NotFoundFailure should be a subclass of HttpFailure","suiteID":2,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":23,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/http/http_failure_test.dart"},"type":"testStart","time":1705}
+{"testID":22,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1707}
+{"test":{"id":23,"name":"ServerFailure should be a subclass of HttpFailure","suiteID":2,"groupIDs":[18],"metadata":{"skip":false,"skipReason":null},"line":29,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/http/http_failure_test.dart"},"type":"testStart","time":1707}
+{"testID":23,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1709}
+
+[{"event":"test.startedProcess","params":{"vmServiceUri":null,"observatoryUri":null}}]
+{"testID":5,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":1900}
+{"group":{"id":24,"suiteID":4,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":null,"column":null,"url":null},"type":"group","time":1900}
+{"test":{"id":25,"name":"geolocationPath should return the correct path","suiteID":4,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":5,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/helpers/api_helper_test.dart"},"type":"testStart","time":1900}
+{"testID":25,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1914}
+{"test":{"id":26,"name":"makeGeolocationQuery should create the correct query map","suiteID":4,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":11,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/helpers/api_helper_test.dart"},"type":"testStart","time":1914}
+{"testID":26,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1917}
+{"test":{"id":27,"name":"makeForecastQuery should create the correct query map","suiteID":4,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":16,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/helpers/api_helper_test.dart"},"type":"testStart","time":1918}
+{"testID":27,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1920}
+{"test":{"id":28,"name":"makeForecastQuery should create the correct query map with locale","suiteID":4,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":21,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/helpers/api_helper_test.dart"},"type":"testStart","time":1920}
+{"testID":28,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1923}
+{"test":{"id":29,"name":"makeUrl should create the correct URL","suiteID":4,"groupIDs":[24],"metadata":{"skip":false,"skipReason":null},"line":26,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/helpers/api_helper_test.dart"},"type":"testStart","time":1923}
+{"testID":29,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":1927}
+
+[{"event":"test.startedProcess","params":{"vmServiceUri":null,"observatoryUri":null}}]
+{"testID":7,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2092}
+{"group":{"id":30,"suiteID":6,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":2092}
+{"test":{"id":31,"name":"read method returns value from FlutterSecureStorage","suiteID":6,"groupIDs":[30],"metadata":{"skip":false,"skipReason":null},"line":19,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/datasources/cache_adapter_test.dart"},"type":"testStart","time":2092}
+
+[{"event":"test.startedProcess","params":{"vmServiceUri":null,"observatoryUri":null}}]
+{"testID":31,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2151}
+{"test":{"id":32,"name":"read method throws ReadingFailure when key is not found","suiteID":6,"groupIDs":[30],"metadata":{"skip":false,"skipReason":null},"line":32,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/datasources/cache_adapter_test.dart"},"type":"testStart","time":2157}
+{"testID":32,"messageType":"print","message":"Storage: No value was found for key nonExistentKey","type":"print","time":2161}
+{"testID":32,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2165}
+{"test":{"id":33,"name":"write method stores value in FlutterSecureStorage","suiteID":6,"groupIDs":[30],"metadata":{"skip":false,"skipReason":null},"line":41,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/datasources/cache_adapter_test.dart"},"type":"testStart","time":2165}
+{"testID":33,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2170}
+{"test":{"id":34,"name":"write method throws WritingFailure on failure","suiteID":6,"groupIDs":[30],"metadata":{"skip":false,"skipReason":null},"line":54,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/datasources/cache_adapter_test.dart"},"type":"testStart","time":2171}
+{"testID":34,"messageType":"print","message":"Storage: Could not save value for key testKey","type":"print","time":2173}
+{"testID":34,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2173}
+{"testID":9,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2241}
+{"group":{"id":35,"suiteID":8,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":2,"line":null,"column":null,"url":null},"type":"group","time":2241}
+{"test":{"id":36,"name":"(setUpAll)","suiteID":8,"groupIDs":[35],"metadata":{"skip":false,"skipReason":null},"line":20,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/datasources/http_datasource_test.dart"},"type":"testStart","time":2241}
+{"testID":36,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2254}
+{"test":{"id":37,"name":"request should make a GET request successfully","suiteID":8,"groupIDs":[35],"metadata":{"skip":false,"skipReason":null},"line":24,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/datasources/http_datasource_test.dart"},"type":"testStart","time":2255}
+
+[{"event":"test.startedProcess","params":{"vmServiceUri":null,"observatoryUri":null}}]
+{"testID":37,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2289}
+{"test":{"id":38,"name":"request should make a POST request successfully","suiteID":8,"groupIDs":[35],"metadata":{"skip":false,"skipReason":null},"line":34,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/data/datasources/http_datasource_test.dart"},"type":"testStart","time":2289}
+{"testID":38,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2292}
+{"test":{"id":39,"name":"(tearDownAll)","suiteID":8,"groupIDs":[35],"metadata":{"skip":false,"skipReason":null},"line":null,"column":null,"url":null},"type":"testStart","time":2292}
+{"testID":39,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2294}
+{"testID":11,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2381}
+{"group":{"id":40,"suiteID":10,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":null,"column":null,"url":null},"type":"group","time":2381}
+{"group":{"id":41,"suiteID":10,"parentID":40,"name":"LastModifiedMixin","metadata":{"skip":false,"skipReason":null},"testCount":5,"line":6,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/entity/last_modified_mixin_test.dart"},"type":"group","time":2381}
+{"test":{"id":42,"name":"LastModifiedMixin markAsModified updates lastModified","suiteID":10,"groupIDs":[40,41],"metadata":{"skip":false,"skipReason":null},"line":15,"column":5,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/entity/last_modified_mixin_test.dart"},"type":"testStart","time":2381}
+{"testID":42,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2403}
+{"test":{"id":43,"name":"LastModifiedMixin timeSinceLastModified returns \"Just now\" for no modification","suiteID":10,"groupIDs":[40,41],"metadata":{"skip":false,"skipReason":null},"line":25,"column":5,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/entity/last_modified_mixin_test.dart"},"type":"testStart","time":2403}
+{"testID":43,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2406}
+{"test":{"id":44,"name":"LastModifiedMixin timeSinceLastModified returns correct time string in minutes after modification","suiteID":10,"groupIDs":[40,41],"metadata":{"skip":false,"skipReason":null},"line":31,"column":5,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/entity/last_modified_mixin_test.dart"},"type":"testStart","time":2406}
+{"testID":44,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2409}
+{"test":{"id":45,"name":"LastModifiedMixin timeSinceLastModified returns correct time string in hours after modification","suiteID":10,"groupIDs":[40,41],"metadata":{"skip":false,"skipReason":null},"line":42,"column":5,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/entity/last_modified_mixin_test.dart"},"type":"testStart","time":2409}
+{"testID":45,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2411}
+{"test":{"id":46,"name":"LastModifiedMixin timeSinceLastModified returns correct time string in days after modification","suiteID":10,"groupIDs":[40,41],"metadata":{"skip":false,"skipReason":null},"line":53,"column":5,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/entity/last_modified_mixin_test.dart"},"type":"testStart","time":2411}
+{"testID":46,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2413}
+{"testID":13,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2501}
+{"group":{"id":47,"suiteID":12,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":3,"line":null,"column":null,"url":null},"type":"group","time":2501}
+{"test":{"id":48,"name":"Call should return result from remoteDecoratee when no error occurs","suiteID":12,"groupIDs":[47],"metadata":{"skip":false,"skipReason":null},"line":30,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/connection_handle_decorator_test.dart"},"type":"testStart","time":2501}
+{"testID":48,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2529}
+{"test":{"id":49,"name":"Call should return result from cacheDecoratee when there is a connectivity error","suiteID":12,"groupIDs":[47],"metadata":{"skip":false,"skipReason":null},"line":47,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/connection_handle_decorator_test.dart"},"type":"testStart","time":2529}
+{"testID":49,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2533}
+{"test":{"id":50,"name":"Call should rethrow other exceptions","suiteID":12,"groupIDs":[47],"metadata":{"skip":false,"skipReason":null},"line":66,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/connection_handle_decorator_test.dart"},"type":"testStart","time":2533}
+{"testID":50,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2539}
+{"testID":15,"result":"success","skipped":false,"hidden":true,"type":"testDone","time":2618}
+{"group":{"id":51,"suiteID":14,"parentID":null,"name":"","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":null,"column":null,"url":null},"type":"group","time":2618}
+{"group":{"id":52,"suiteID":14,"parentID":51,"name":"ErrorHandleDecorator","metadata":{"skip":false,"skipReason":null},"testCount":4,"line":15,"column":3,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/error_handle_decorator_test.dart"},"type":"group","time":2618}
+{"test":{"id":53,"name":"ErrorHandleDecorator Calls _decoratee and returns its result","suiteID":14,"groupIDs":[51,52],"metadata":{"skip":false,"skipReason":null},"line":21,"column":5,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/error_handle_decorator_test.dart"},"type":"testStart","time":2618}
+{"testID":53,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2668}
+{"test":{"id":54,"name":"ErrorHandleDecorator Handles BadRequestFailure and throws ClientFailure","suiteID":14,"groupIDs":[51,52],"metadata":{"skip":false,"skipReason":null},"line":34,"column":5,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/error_handle_decorator_test.dart"},"type":"testStart","time":2669}
+{"testID":54,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2676}
+{"test":{"id":55,"name":"ErrorHandleDecorator Handles UnauthorizedFailure and throws ClientFailure","suiteID":14,"groupIDs":[51,52],"metadata":{"skip":false,"skipReason":null},"line":44,"column":5,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/error_handle_decorator_test.dart"},"type":"testStart","time":2677}
+{"testID":55,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2679}
+{"test":{"id":56,"name":"ErrorHandleDecorator Rethrows other errors","suiteID":14,"groupIDs":[51,52],"metadata":{"skip":false,"skipReason":null},"line":54,"column":5,"url":"file:///home/regis/Documentos/regisksc/challenges/cloudwalk_challenge/packages/core/test/domain/usecase/error_handle_decorator_test.dart"},"type":"testStart","time":2679}
+{"testID":56,"result":"success","skipped":false,"hidden":false,"type":"testDone","time":2681}
+{"success":true,"type":"done","time":2693}
