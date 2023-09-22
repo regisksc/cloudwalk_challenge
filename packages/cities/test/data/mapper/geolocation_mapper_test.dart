@@ -2,6 +2,8 @@ import 'package:cities/cities.dart';
 import 'package:faker/faker.dart';
 import 'package:test/test.dart';
 
+import '../../_utils/mocks.dart';
+
 void main() {
   final faker = Faker();
 
@@ -42,5 +44,16 @@ void main() {
     expect(json['lon'], geolocation.lon);
     expect(json['country'], geolocation.country);
     expect(json['state'], geolocation.state);
+  });
+
+  test('GeolocationMapperExtension asEntity should return a Geolocation object', () {
+    final geolocation = geolocationMapper.asEntity;
+
+    expect(geolocation.name, geolocationMapper.name);
+    expect(geolocation.lat, geolocationMapper.lat);
+    expect(geolocation.lon, geolocationMapper.lon);
+    expect(geolocation.localName, geolocationMapper.localName);
+    expect(geolocation.country, geolocationMapper.country);
+    expect(geolocation.state, geolocationMapper.state);
   });
 }

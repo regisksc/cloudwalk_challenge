@@ -13,6 +13,4 @@ class GeolocationInput extends Equatable {
   List<Object?> get props => [cityName, locale];
 
   String get cacheKey => 'geolocation_${cityName}_${locale ?? 'en_US'}';
-
-  bool? get stringify => true;
 }
