@@ -2,7 +2,7 @@ name: cloudwalk_challenge
 description: "A new Flutter project."
 publish_to: "none"
 
-version: 6.0.0
+version: 6.1.0
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
