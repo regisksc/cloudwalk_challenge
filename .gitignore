@@ -45,5 +45,5 @@
 **/android/app/release
 
 
-**/coverage
-**/metrics
+app/coverage
+app/metrics
