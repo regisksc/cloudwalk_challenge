@@ -3,19 +3,27 @@ description: "runs test suites and reports results"
 
 runs:
   using: "composite"
-  
+
   steps:
     - uses: actions/checkout@v2
     - uses: subosito/flutter-action@v2
-      with: 
-        channel: 'stable'
+      with:
+        channel: "stable"
         cache: true
     - name: unit tests
+      id: tests
       shell: bash
       run: |
         cd ./app
         chmod +x ../scripts/run-tests.sh
         ../scripts/run-tests.sh
+
+    - name: upload goldens on failure
+      if: steps.tests.conclusion == 'failure'
+      uses: actions/upload-artifact@v3
+      with:
+        name: golden-pngs
+        path: "**/test/**/.png"
 
     - name: upload metrics html
       uses: actions/upload-artifact@v3
@@ -28,7 +36,7 @@ runs:
       uses: romeovs/lcov-reporter-action@v0.3.1
       with:
         lcov-file: app/coverage/lcov.info
-        title: 'coverage report'
+        title: "coverage report"
 
     - name: verify minimum coverage
       uses: VeryGoodOpenSource/very_good_coverage@v2

@@ -26,16 +26,16 @@ class BodyList extends StatelessWidget {
             itemCount: isDataState ? state.cities?.length : 1,
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
-                key: Key('tile_${isDataState ? (state as NextConcerts).cities![index].name : ''}'),
-                title: Text(() {
-                  if (isDataState) return _formatCityName(state.cities![index]);
-                  if (state is FetchFailed) return state.wasNotFound ? 'City not found' : state.errorMessage;
-                  if (state is Loading) return 'fetching ...';
-                  return '';
-                }(),
-                    style: TextStyle(
-                      fontSize: MediaQuery.of(context).size.width * 0.04,
-                    )),
+                key: Key('item_$index'),
+                title: Text(
+                  () {
+                    if (isDataState) return _formatCityName(state.cities![index]);
+                    if (state is FetchFailed) return state.wasNotFound ? 'City not found' : state.errorMessage;
+                    if (state is Loading) return 'fetching ...';
+                    return '';
+                  }(),
+                  style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04),
+                ),
                 leading: Container(
                   padding: EdgeInsets.all(_longestSide * .01),
                   decoration: const BoxDecoration(shape: BoxShape.circle),
