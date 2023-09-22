@@ -1,12 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:weather/weather.dart';
 
 import '../../../_utils/mocks.dart';
-
-class MockFetchCurrentWeather extends Mock implements Usecase<WeatherForecast, WeatherFetchingInput> {}
 
 void main() {
   late WeatherForecast mockForecast;
