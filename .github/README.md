@@ -80,6 +80,9 @@ flutter drive \
 flutter run app/lib/main/main.dart --release
 ```
 
-### Apks:
+### CI:
 
-The GitHub Actions tab includes build workflow runs that allow you to download APKs for each version of the app.
+The GitHub Actions tab includes build workflow runs that allow you to download APKs for each version of the app. <br>
+
+You can also [manually run the test and analyzis CI](https://github.com/regisksc/cloudwalk_challenge/actions/workflows/ci.yml) <br>
+To visualize the cis full potential, [navigate to the github folder](https://github.com/regisksc/cloudwalk_challenge/tree/main/.github)
